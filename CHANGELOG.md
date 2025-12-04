@@ -2,6 +2,10 @@
 
 All notable changes to the CE-RISE Diagnostic Results Data Model will be documented in this file.
 
+## [0.0.2] - 2025-12-04
+
+### SAME as [0.0.1] which failed deployment because of Codeberg malfunction
+
 ## [0.0.1] - 2025-12-04
 
 ### Added

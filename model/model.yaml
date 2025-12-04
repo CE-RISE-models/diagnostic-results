@@ -3,7 +3,7 @@ name: diagnostic-results
 title: Diagnostic Results Data Model
 description: Structured outputs from diagnostic, repair, service, and condition-assessment operations
 license: https://creativecommons.org/licenses/by-nc/4.0/
-version: 0.0.1
+version: 0.0.2
 
 prefixes:
     linkml: https://w3id.org/linkml/

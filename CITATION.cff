@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 title: CE-RISE Diagnostic Results
 message: >-
-  v0.0.1 - Initial project setup and full data model draft.
+  v0.0.2 - Initial project setup and full data model draft.
 type: software
 doi: xxx_to_be_obtained_xxx
 authors:
