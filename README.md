@@ -31,6 +31,9 @@ This model focuses exclusively on diagnostic outputs and assessment results. Sta
 - **Error and fault records** - Error codes, fault trees, failure mode identifications
 - **Condition monitoring snapshots** - Battery health, component wear levels, degradation metrics
 - **Quality control test results** - Production tests, acceptance tests, periodic inspections
+- **Component inventory documentation** - Discovery of any product components, serial tracking, configuration
+- **Data sanitization records** - Secure erasure certificates for any data-bearing components
+- **Quality grading assessments** - Condition grades, functional assessments, market categorization
 
 ### What This Model EXCLUDES (handled by other CE-RISE models):
 - **Static product specifications** → `product-profile` model (design specs, nominal values)
@@ -58,71 +61,104 @@ DiagnosticResults (root)
 ├── 1. DiagnosticEvent
 │   ├── EventIdentifier (UUID)
 │   ├── EventTimestamp (ISO 8601)
-│   ├── DiagnosticType (service/self-test/predictive/calibration)
+│   ├── DiagnosticType (service/self-test/predictive/calibration/inspection)
 │   ├── PerformedBy (technician ID or system ID)
 │   ├── ProductReference (link to product-profile)
 │   ├── LocationReference (facility/field location)
-│   └── EventTrigger (scheduled/failure/request)
-├── 2. ServiceReport
-│   ├── ReportIdentifier
-│   ├── TechnicianIdentifier
-│   ├── ServiceType (repair/maintenance/inspection)
-│   ├── ServiceActions (list of performed actions)
-│   ├── PartsReplaced (component identifiers)
-│   ├── ServiceDuration
-│   ├── ServiceOutcome (completed/partial/failed)
-│   └── NextServiceRecommendation
-├── 3. DiagnosticOutput
-│   ├── TestIdentifier
-│   ├── TestType (functional/performance/safety)
-│   ├── TestParameters
-│   ├── MeasuredValues
-│   ├── ReferenceValues
-│   ├── PassFailStatus
-│   ├── Deviations
-│   └── TestStandard (ISO/IEC reference)
-├── 4. ErrorFaultRecord
-│   ├── ErrorCode
-│   ├── ErrorDescription
-│   ├── ErrorSeverity (critical/major/minor/warning)
-│   ├── ErrorTimestamp
-│   ├── AffectedComponents
-│   ├── RootCause
-│   ├── CorrectiveAction
-│   └── ResolutionStatus
-├── 5. ConditionAssessment
-│   ├── AssessmentIdentifier
+│   ├── EventTrigger (scheduled/failure/request/periodic)
+│   ├── UnitIdentifier (internal tracking ID)
+│   ├── BatchIdentifier (batch/lot reference)
+│   └── AssetReference (asset management ID)
+├── 2. ComponentInventory
 │   ├── ComponentIdentifier
+│   ├── ComponentType (generic classification)
+│   ├── ComponentCategory
+│   ├── Manufacturer
+│   ├── Model
+│   ├── PartNumber
+│   ├── SerialNumber
+│   ├── Version/Revision
+│   ├── ComponentSpecifications (key-value pairs)
+│   ├── SubComponents (nested components)
+│   │   ├── SubComponentID
+│   │   ├── SubComponentType
+│   │   ├── SubComponentModel
+│   │   ├── SubComponentSerial
+│   │   └── SubComponentSpecs
+│   └── ComponentHierarchy (parent-child relationships)
+├── 3. ComponentTestResults
+│   ├── TestIdentifier
+│   ├── TestTimestamp
+│   ├── ComponentReference (links to ComponentInventory)
+│   ├── TestType (functional/performance/safety/compliance)
+│   ├── TestName
+│   ├── TestResult (pass/fail/warning/not-tested)
+│   ├── MeasuredValues (with units)
+│   ├── ReferenceValues
+│   ├── TestStandard (if applicable)
+│   ├── TestParameters
+│   ├── Deviations
+│   ├── ObservationCodes
+│   └── ObservationNotes
+├── 4. ConditionMetrics
+│   ├── MetricIdentifier
+│   ├── ComponentReference
+│   ├── MetricType (health/wear/performance/capacity)
+│   ├── MetricName
+│   ├── CurrentValue
+│   ├── NominalValue
+│   ├── Unit
 │   ├── HealthScore (0-100%)
 │   ├── DegradationIndicators
 │   │   ├── WearLevel
-│   │   ├── FatigueIndex
+│   │   ├── UsageCycles
+│   │   ├── OperatingHours
 │   │   └── PerformanceDegradation
-│   ├── BatteryHealth (for electronics)
-│   │   ├── StateOfCharge
-│   │   ├── StateOfHealth
-│   │   ├── CycleCount
-│   │   └── Capacity
 │   └── EstimatedRemainingLife
-├── 6. PredictiveMaintenance
-│   ├── PredictionIdentifier
-│   ├── PredictionModel
-│   ├── FailureProbability
-│   ├── TimeToFailure
-│   ├── ConfidenceLevel
-│   ├── RecommendedActions
-│   ├── MaintenanceUrgency
-│   └── CostBenefitEstimate
-└── 7. CalibrationCertificate
-    ├── CertificateIdentifier
-    ├── CalibrationDate
-    ├── CalibrationStandard
-    ├── CalibrationEquipment
-    ├── MeasurementPoints
-    ├── Uncertainties
-    ├── AdjustmentsMade
-    ├── CalibrationInterval
-    └── AccreditationReference
+├── 5. DataSanitization
+│   ├── SanitizationIdentifier
+│   ├── DataBearingComponents (list)
+│   │   ├── ComponentReference
+│   │   ├── ComponentType
+│   │   ├── DataCapacity
+│   │   ├── SanitizationMethod
+│   │   ├── SanitizationStandard
+│   │   ├── SanitizationResult (success/failed/partial)
+│   │   ├── VerificationMethod
+│   │   ├── SanitizationTimestamp
+│   │   ├── PerformedBy
+│   │   └── CertificateReference
+│   └── ComplianceCertification
+├── 6. QualityAssessment
+│   ├── QualityGrade
+│   ├── GradingScale
+│   ├── CosmeticCondition
+│   ├── FunctionalCondition
+│   ├── PerformanceScore
+│   ├── AssessmentCriteria
+│   └── QualityCheckResults
+├── 7. ServiceActions
+│   ├── ActionIdentifier
+│   ├── ActionType (repair/replace/adjust/clean/update)
+│   ├── ActionDescription
+│   ├── ComponentsAffected
+│   ├── PartsReplaced
+│   │   ├── OldPartNumber
+│   │   ├── NewPartNumber
+│   │   └── Quantity
+│   ├── ActionOutcome
+│   ├── TimeSpent
+│   └── TechnicianNotes
+└── 8. PredictiveAnalytics
+    ├── PredictionIdentifier
+    ├── PredictionModel
+    ├── ComponentReference
+    ├── FailureProbability
+    ├── TimeToFailure
+    ├── ConfidenceLevel
+    ├── RecommendedActions
+    ├── MaintenanceUrgency
+    └── CostBenefitAnalysis
 ```
 
 ### Workflow Sequence
@@ -132,70 +168,85 @@ Foundation for all diagnostic activities with complete context:
 - **EventIdentifier**: Unique UUID for each diagnostic event
 - **EventTimestamp**: When the diagnostic occurred (ISO 8601 with timezone)
 - **DiagnosticType**: Classification (SERVICE/SELF_TEST/PREDICTIVE/CALIBRATION/INSPECTION)
-- **PerformedBy**: Who/what performed it (technician GLN, system ID, IoT device ID)
-- **ProductReference**: Link to product-profile identifiers (GTIN + serial)
-- **LocationReference**: Where performed (facility GLN, field location, remote)
-- **EventTrigger**: What initiated it (SCHEDULED/FAILURE/REQUEST/ALERT)
+- **PerformedBy**: Who/what performed it (technician ID, system ID, diagnostic software)
+- **ProductReference**: Link to product-profile identifiers
+- **LocationReference**: Where performed (facility GLN, servicefurbishment center, field location)
+- **EventTrigger**: What initiated it (SCHEDULED/FAILURE/REQUEST/QUALITY_CHECK/INTAKE)
+- **UnitIdentifier**: Internal tracking ID for the specific unit
+- **LotIdentifier**: Batch or lot reference for grouped processing
+- **AssetTag**: Asset management tag for enterprise tracking
 
-#### **Step 2: ServiceReport**
-Human technician service and repair documentation:
-- **ReportIdentifier**: Unique service report number
-- **TechnicianIdentifier**: Certified technician ID/license
-- **ServiceType**: REPAIR/PREVENTIVE_MAINTENANCE/CORRECTIVE_MAINTENANCE/INSPECTION
-- **ServiceActions**: Detailed list of actions performed
-- **PartsReplaced**: Component identifiers and quantities
-- **ServiceDuration**: Time spent (ISO 8601 duration)
-- **ServiceOutcome**: COMPLETED/PARTIAL/FAILED/DEFERRED
-- **NextServiceRecommendation**: Follow-up requirements
+#### **Step 2: HardwareInventory**
+Complete hardware configuration discovery and documentation:
+- **ProductType**: Device category (LAPTOP/DESKTOP/TABLET/PHONE/SERVER)
+- **Manufacturer**: OEM manufacturer name
+- **Model**: Specific model designation
+- **SerialNumber**: Manufacturer serial number
+- **ProcessorDetails**: CPU model, speed, generation, socket type
+- **MemoryConfiguration**: Total RAM and individual DIMM/SODIMM details (model, serial, type, size)
+- **StorageDevices**: Up to 4 storage devices with type, size, model, serial
+- **DisplaySpecifications**: Screen size and resolution
+- **MotherboardInfo**: Board manufacturer, model, serial, BIOS/UEFI version
 
-#### **Step 3: DiagnosticOutput**
-Structured test results from automated or manual testing:
-- **TestIdentifier**: Unique test ID
-- **TestType**: FUNCTIONAL/PERFORMANCE/SAFETY/COMPLIANCE
-- **TestParameters**: Input conditions and settings
-- **MeasuredValues**: Actual measurements with units
-- **ReferenceValues**: Expected/nominal values
-- **PassFailStatus**: Clear pass/fail determination
-- **Deviations**: Percentage or absolute deviations
-- **TestStandard**: Reference to ISO/IEC/IEEE standard
+#### **Step 3: ComponentTestResults**
+Individual component functional testing outcomes:
+- **TestIdentifier**: Unique test batch ID
+- **ComponentTests**: Pass/Fail/Not-Tested status for each component:
+  - CMOS, Speaker, USB Ports, LAN Port, Optical Drive
+  - Display/LCD, Keyboard, Touchpad, WiFi adapter
+  - Webcam (primary and secondary), Touchscreen, Microphone
+  - Storage devices (individual test results)
+- **ObservationCodes**: Standardized defect or issue codes
+- **ObservationNotes**: Technician notes on observed issues
 
-#### **Step 4: ErrorFaultRecord**
-Capture and classification of errors and faults:
-- **ErrorCode**: Standardized error code (OBD, proprietary)
-- **ErrorDescription**: Human-readable description
-- **ErrorSeverity**: CRITICAL/MAJOR/MINOR/WARNING
-- **ErrorTimestamp**: When error occurred
-- **AffectedComponents**: Which parts are impacted
-- **RootCause**: Identified or suspected cause
-- **CorrectiveAction**: Required or recommended action
-- **ResolutionStatus**: OPEN/IN_PROGRESS/RESOLVED/DEFERRED
+#### **Step 4: BatteryDiagnostics**
+Comprehensive battery health assessment:
+- **BatteryModel**: Battery part number/model
+- **BatteryTest**: Pass/fail status of battery test
+- **DesignCapacity**: Original design capacity in mAh
+- **CurrentCapacity**: Current maximum capacity in mAh
+- **BatteryHealth**: Percentage of design capacity remaining
+- **CycleCount**: Number of charge/discharge cycles
+- **BatteryDuration**: Runtime test result in minutes
+- **SecondaryBattery**: If present, same metrics for second battery
 
-#### **Step 5: ConditionAssessment**
-Current state and health evaluation:
-- **HealthScore**: Overall health percentage (0-100%)
-- **DegradationIndicators**: Wear, fatigue, performance metrics
-- **BatteryHealth**: For electronic products (SoC, SoH, cycles)
-- **ComponentStatus**: Individual component assessments
-- **EstimatedRemainingLife**: Predicted useful life remaining
+#### **Step 5: DataSanitization**
+Secure data erasure and certification:
+- **StorageDevices**: For each storage device (up to 4):
+  - Device identification (type, size, model, serial)
+  - **ErasureMethod**: NIST 800-88, DoD 5220.22-M, Secure Erase, etc.
+  - **ErasureResult**: SUCCESS/FAILED/PARTIAL/SKIPPED
+  - **ErasureTimestamp**: When erasure completed
+  - **ErasureUser**: Technician who performed erasure
+  - **ErasureID**: Certificate or report ID for audit trail
+- **DataDestructionCertificate**: Reference to formal certificate
 
-#### **Step 6: PredictiveMaintenance**
-Analytics-driven maintenance predictions:
-- **FailureProbability**: Statistical likelihood of failure
-- **TimeToFailure**: Estimated time until failure
-- **ConfidenceLevel**: Statistical confidence in prediction
-- **RecommendedActions**: Preventive measures
-- **MaintenanceUrgency**: IMMEDIATE/HIGH/MEDIUM/LOW
-- **CostBenefitEstimate**: Economic impact analysis
+#### **Step 6: GradingAssessment**
+Quality grading for refurbished products:
+- **Grade**: Overall grade (A/B/C/D/F or custom scale)
+- **CosmeticCondition**: Physical appearance assessment
+- **FunctionalCondition**: Operational capability assessment
+- **PerformanceScore**: Benchmark or performance metrics
+- **RefurbishmentActions**: List of refurbishment activities performed
+- **QualityCheckResults**: Final quality control outcomes
 
-#### **Step 7: CalibrationCertificate**
-Calibration and accuracy verification:
-- **CalibrationDate**: When calibrated
-- **CalibrationStandard**: Reference standard used
-- **MeasurementPoints**: Tested points and results
-- **Uncertainties**: Measurement uncertainties
-- **AdjustmentsMade**: Corrections applied
-- **CalibrationInterval**: Next calibration due
-- **AccreditationReference**: Lab accreditation details
+#### **Step 7: SoftwareValidation**
+Operating system and licensing verification:
+- **OperatingSystem**: OS installed, version, restoration status
+- **COAInformation**: Certificate of Authenticity presence and numbers
+- **HardwareID**: Unique hardware identifier for activation
+- **IMEI**: For mobile devices with cellular capability
+- **LicenseStatus**: Valid/Invalid/Not-applicable
+
+#### **Step 8: AuditTraceability**
+Process tracking and audit trail:
+- **AuditStatus**: Whether unit has been audited
+- **AuditDate**: When audit was performed
+- **ExportStatus**: Export readiness status
+- **ExportDate**: When exported from system
+- **TechnicianUser**: User who performed diagnostics
+- **PictureID**: Reference to product images
+- **ProcessingLotID**: Batch processing reference
 
 ### Data Properties
 
@@ -231,13 +282,14 @@ This identifier system enables seamless integration with databases and ensures c
 
 | Step | Component | Criticalities Identified | Solutions Implemented | Status | Missing/TODO |
 |------|-----------|-------------------------|----------------------|--------|--------------|
-| **1** | **DiagnosticEvent** | • Need for event tracking and context<br>• Link to product identity<br>• Trigger classification<br>• Performer identification | • UUID-based event IDs<br>• ISO 8601 timestamps<br>• Product reference system<br>• Trigger enumeration<br>• Multi-source performer IDs | **TODO** | • Event correlation<br>• Blockchain anchoring |
-| **2** | **ServiceReport** | • Technician documentation<br>• Service action tracking<br>• Parts replacement records<br>• Outcome classification | • Structured service types<br>• Action list format<br>• Component tracking<br>• Outcome enumeration | **TODO** | • Digital signatures<br>• Photo attachments |
-| **3** | **DiagnosticOutput** | • Test result structure<br>• Pass/fail determination<br>• Standards reference<br>• Measurement units | • Test type classification<br>• Value/reference pairs<br>• Standards alignment<br>• Unit ontology | **TODO** | • Uncertainty calculation<br>• Statistical analysis |
-| **4** | **ErrorFaultRecord** | • Error classification<br>• Severity assessment<br>• Root cause tracking<br>• Resolution workflow | • Error code systems<br>• Severity levels<br>• Component mapping<br>• Status tracking | **TODO** | • Fault tree analysis<br>• FMEA integration |
-| **5** | **ConditionAssessment** | • Health scoring<br>• Degradation metrics<br>• Battery specifics<br>• Life estimation | • 0-100% health scale<br>• Multi-indicator system<br>• Battery standards<br>• RUL algorithms | **TODO** | • ML model integration<br>• Trend analysis |
-| **6** | **PredictiveMaintenance** | • Failure prediction<br>• Confidence levels<br>• Action recommendations<br>• Cost-benefit analysis | • Probability models<br>• Urgency classification<br>• Action templates<br>• Economic models | **TODO** | • AI/ML pipelines<br>• Real-time updates |
-| **7** | **CalibrationCertificate** | • Calibration tracking<br>• Standards compliance<br>• Uncertainty reporting<br>• Interval management | • Certificate structure<br>• ISO 17025 alignment<br>• Uncertainty format<br>• Schedule integration | **TODO** | • Digital certificates<br>• Auto-scheduling |
+| **1** | **DiagnosticEvent** | • Need for event tracking and context<br>• Asset management integration<br>• Batch processing support<br>• Multi-identifier tracking | • UUID-based event IDs<br>• Unit/Lot/Asset identifiers<br>• ISO 8601 timestamps<br>• Trigger enumeration<br>• Refurbishment type added | **TODO** | • Event correlation<br>• Workflow automation |
+| **2** | **HardwareInventory** | • Complete hardware discovery<br>• Component serialization<br>• Multi-storage support<br>• Memory slot tracking | • Comprehensive component fields<br>• Up to 4 RAM slots<br>• Up to 4 storage devices<br>• Processor details structure<br>• Motherboard information | **TODO** | • Auto-discovery APIs<br>• Component database |
+| **3** | **ComponentTestResults** | • Individual component testing<br>• Pass/fail tracking<br>• Observation recording<br>• Defect coding | • 15+ component test types<br>• Tri-state results<br>• Observation codes<br>• Technician notes field | **TODO** | • Test automation<br>• Defect analytics |
+| **4** | **BatteryDiagnostics** | • Battery health metrics<br>• Capacity tracking<br>• Multi-battery support<br>• Runtime testing | • Design vs current capacity<br>• Health percentage<br>• Cycle counting<br>• Duration testing<br>• Secondary battery support | **TODO** | • Predictive degradation<br>• Chemistry detection |
+| **5** | **DataSanitization** | • Secure erasure tracking<br>• Multi-drive support<br>• Certification generation<br>• Audit compliance | • NIST/DoD methods<br>• Per-drive tracking<br>• Result enumeration<br>• Certificate IDs<br>• User attribution | **TODO** | • Automated certificates<br>• Blockchain verification |
+| **6** | **GradingAssessment** | • Quality grading<br>• Condition assessment<br>• Refurbishment tracking<br>• Market categorization | • A-F grade scale<br>• Cosmetic/functional split<br>• Performance scoring<br>• Action tracking | **TODO** | • ML-based grading<br>• Market pricing |
+| **7** | **SoftwareValidation** | • OS verification<br>• License tracking<br>• COA management<br>• Activation status | • OS restoration status<br>• COA number tracking<br>• Hardware ID capture<br>• IMEI for mobile | **TODO** | • License automation<br>• Activation APIs |
+| **8** | **AuditTraceability** | • Process tracking<br>• Export management<br>• Image documentation<br>• Batch processing | • Audit status/date<br>• Export tracking<br>• Picture references<br>• Lot ID system<br>• User attribution | **TODO** | • Workflow integration<br>• Image storage |
 
 ### Integration Opportunities
 
