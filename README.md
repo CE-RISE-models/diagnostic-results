@@ -87,10 +87,6 @@ DiagnosticResults (root)
 │   │   ├── TestsCompleted
 │   │   ├── TestsAborted
 │   │   └── AbortReasons
-│   └── QualityMetadata
-│       ├── DataCompleteness
-│       ├── ResultConfidence (high/medium/low)
-│       └── AnomaliesDetected
 ├── 2. ComponentInventory
 │   ├── ComponentIdentifier
 │   ├── ComponentType (generic classification)
@@ -128,10 +124,8 @@ DiagnosticResults (root)
 │   │   ├── ReferenceBaseline
 │   │   ├── PeerComparison
 │   │   └── SpecificationCompliance
-│   ├── TestQuality
-│   │   ├── RetestRequired
-│   │   ├── InconclusiveReason
-│   │   └── DiagnosticErrors
+│   ├── RetestRequired
+│   ├── InconclusiveReason
 │   └── CalibrationTraceability
 │       ├── TestEquipmentID
 │       ├── LastCalibrationDate
@@ -201,124 +195,144 @@ DiagnosticResults (root)
 
 #### **Step 1: DiagnosticEvent**
 Foundation for all diagnostic activities with complete context:
-- **EventIdentifier**: Unique UUID for each diagnostic event
-- **EventTimestamp**: When the diagnostic occurred (ISO 8601 with timezone)
-- **DiagnosticType**: Classification (SERVICE/SELF_TEST/PREDICTIVE/CALIBRATION/INSPECTION)
-- **PerformedBy**: Who/what performed it (technician ID, system ID, diagnostic software)
-- **ProductReference**: Link to product-profile identifiers
-- **LocationReference**: Where performed (facility GLN, service center, field location)
-- **EventTrigger**: What initiated it (SCHEDULED/FAILURE/REQUEST/QUALITY_CHECK/INTAKE)
-- **UnitIdentifier**: Internal tracking ID for the specific unit
-- **BatchIdentifier**: Batch or lot reference for grouped processing
-- **AssetReference**: Asset management tag for enterprise tracking
-- **DiagnosticSoftware**: Critical software/tool information
-  - ToolName, ToolVersion, ToolVendor for reproducibility
-  - ToolCertification status if validated/certified
-  - ToolConfiguration settings used
-- **EnvironmentalConditions**: Test environment parameters
-  - Temperature, humidity, pressure during testing
-  - Test environment type (lab/field/factory/customer-site)
-- **SessionMetadata**: Diagnostic session tracking
-  - Total session duration, test sequence order
-  - Tests completed vs aborted with reasons
-- **QualityMetadata**: Result quality indicators
-  - Data completeness percentage
-  - Result confidence level (high/medium/low)
-  - Anomalies detected during diagnostic
+- **event_identifier**: UUID for each diagnostic event (pattern validated)
+- **event_timestamp**: ISO 8601 datetime with timezone
+- **diagnostic_type**: Classification (SERVICE/SELF_TEST/PREDICTIVE/CALIBRATION/INSPECTION/REFURBISHMENT)
+- **performed_by**: Who/what performed diagnostic (technician ID, system ID, software)
+- **event_trigger**: What initiated it (SCHEDULED/FAILURE/REQUEST/QUALITY_CHECK/INTAKE/ALERT)
+- **technician_observations**: Technician observations during diagnostic
+- **failure_description**: Description of failure or issue found
+- **recommended_actions**: Recommended next steps or actions
+
+**DiagnosticSoftware** (nested class):
+- **tool_name**: Name of diagnostic software or tool
+- **tool_version**: Version (critical for reproducibility)
+- **tool_vendor**: Vendor or manufacturer
+- **tool_certification**: Certification status if validated
+- **tool_configuration**: Configuration settings used
+
+**EnvironmentalConditions** (nested class):
+- **temperature**: Temperature during testing (float with unit)
+- **humidity**: Humidity percentage
+- **pressure**: Atmospheric pressure
+- **test_environment**: Type (LAB/FIELD/FACTORY/CUSTOMER_SITE/SERVICE_CENTER/REMOTE)
+- **other_conditions**: Additional environmental factors
+
+**SessionMetadata** (nested class):
+- **session_duration**: Total duration in seconds
+- **test_sequence**: Order of tests performed
+- **tests_completed**: Number of tests successfully completed
+- **tests_aborted**: Number of tests aborted
+- **abort_reasons**: Reasons for any aborted tests
 
 #### **Step 2: ComponentInventory**
 Generic component discovery and documentation (hardware or software):
-- **ComponentIdentifier**: Unique identifier for the component
-- **ComponentType**: Generic classification (processor/memory/storage/sensor/actuator/module/assembly)
-- **ComponentCategory**: Higher-level categorization
-- **Manufacturer**: Component manufacturer name
-- **Model**: Specific model designation
-- **PartNumber**: Manufacturer part number
-- **SerialNumber**: Component serial number
-- **Version/Revision**: Firmware or hardware revision
-- **ComponentSpecifications**: Flexible key-value pairs for any specifications
-- **SubComponents**: Nested components with full tracking
-- **ComponentHierarchy**: Parent-child relationships between components
+- **component_identifier**: Unique identifier (alphanumeric with -._)
+- **component_type**: Classification (PROCESSOR/MEMORY/STORAGE/SENSOR/ACTUATOR/MODULE/ASSEMBLY/POWER/COMMUNICATION/DISPLAY/CONNECTOR)
+- **component_category**: Higher-level (HARDWARE/SOFTWARE/FIRMWARE/MECHANICAL/ELECTRICAL/OPTICAL/HYDRAULIC/PNEUMATIC)
+- **manufacturer**: Component manufacturer name
+- **model**: Specific model designation
+- **part_number**: Manufacturer part number
+- **serial_number**: Component serial number
+- **version**: Firmware or hardware revision
+
+**ComponentSpecification** (nested class, multivalued):
+- **spec_name**: Name of specification parameter
+- **spec_value**: Value of specification
+- **spec_unit**: Unit of measurement
+
+**ComponentHierarchy** (nested class):
+- **parent_component**: Reference to parent component_identifier
+- **hierarchy_level**: Level in hierarchy (0 for root)
+- **assembly_position**: Physical/logical position in parent
+
+**sub_components**: Nested ComponentInventory objects for full hierarchy tracking
 
 #### **Step 3: ComponentTestResults**
 Generic component testing outcomes for any component type:
-- **TestIdentifier**: Unique test batch ID
-- **ComponentReference**: Links to specific component being tested
-- **TestType**: FUNCTIONAL/PERFORMANCE/SAFETY/COMPLIANCE
-- **TestName**: Specific test performed
-- **TestResult**: PASS/FAIL/WARNING/NOT_TESTED/INCONCLUSIVE
-- **MeasuredValues**: Actual measurements with units
-- **ReferenceValues**: Expected/nominal values
-- **TestStandard**: Reference standard (ISO/IEC/ASTM)
-- **TestProtocolReference**: Which test protocol was followed
-- **ComplianceStandard**: Applicable compliance requirements
-- **TestComparison**: Baseline, peer, and specification compliance
-- **TestQuality**: Retest requirements, inconclusive reasons, diagnostic errors
-- **CalibrationTraceability**: Test equipment calibration status
-- **ObservationCodes**: Standardized defect or issue codes
-- **ObservationNotes**: Technician notes on observed issues
+- **test_identifier**: Unique test batch ID
+- **component_reference**: Links to specific component being tested
+- **test_type**: FUNCTIONAL/PERFORMANCE/STRESS/CALIBRATION/DIAGNOSTIC
+- **test_name**: Specific test performed
+- **test_result**: PASS/FAIL/WARNING/INCONCLUSIVE/SKIPPED
+- **measured_values**: Actual measurements with units
+- **expected_values**: Expected/nominal values
+- **test_standard**: Reference standard (ISO/IEC/ASTM)
+- **test_protocol**: Which test protocol was followed
+- **compliance_requirements**: Applicable compliance requirements
+- **calibration_status**: Test equipment calibration status
+- **retest_required**: Whether test needs re-running
+- **inconclusive_reason**: Why test couldn't determine result
+- **observation_codes**: Standardized defect or issue codes
+- **observation_notes**: Technician notes on observed issues
 
 #### **Step 4: ConditionMetrics**
 Generic condition and health assessment for any component:
-- **MetricIdentifier**: Unique metric ID
-- **ComponentReference**: Which component is being measured
-- **MetricType**: HEALTH/WEAR/PERFORMANCE/CAPACITY
-- **MetricName**: Specific metric (e.g., "battery_capacity", "bearing_vibration")
-- **CurrentValue**: Current measured value
-- **NominalValue**: Expected/design value
-- **Unit**: Measurement unit
-- **HealthScore**: Overall health percentage (0-100%)
-- **DegradationIndicators**: Wear level, usage cycles, operating hours
-- **EstimatedRemainingLife**: Predicted useful life remaining
+- **metric_identifier**: Unique metric ID
+- **component_reference**: Which component is being measured
+- **metric_type**: HEALTH/WEAR/PERFORMANCE/CAPACITY/EFFICIENCY/RELIABILITY
+- **metric_name**: Specific metric (e.g., "battery_capacity", "bearing_vibration")
+- **current_value**: Current measured value
+- **nominal_value**: Expected/design value
+- **metric_unit**: Measurement unit
+- **health_score**: Overall health percentage (0-100%)
+- **degradation_rate**: Rate of degradation
+- **usage_cycles**: Number of usage cycles
+- **operating_hours**: Total operating hours
+- **estimated_remaining_life**: Predicted useful life remaining
 
 #### **Step 5: DataSanitization**
 Secure data erasure for any data-bearing component:
-- **SanitizationIdentifier**: Unique sanitization event ID
-- **DataBearingComponents**: List of any components containing data
-  - ComponentReference linking to ComponentInventory
-  - ComponentType (storage/memory/cache/firmware)
-  - DataCapacity of the component
-  - **SanitizationMethod**: Method appropriate to component type
-  - **SanitizationStandard**: NIST 800-88, DoD 5220.22-M, etc.
-  - **SanitizationResult**: SUCCESS/FAILED/PARTIAL/SKIPPED
-  - **VerificationMethod**: How sanitization was verified
-  - **SanitizationTimestamp**: When completed
-  - **PerformedBy**: Technician or system
-  - **CertificateReference**: Audit trail certificate
-- **ComplianceCertification**: Reference to formal compliance certificate
+- **sanitization_identifier**: Unique sanitization event ID
+- **component_reference**: Reference to data-bearing component
+- **sanitization_method**: OVERWRITE/SECURE_ERASE/DEGAUSS/PHYSICAL_DESTRUCTION/CRYPTO_ERASE
+- **sanitization_standard**: NIST_800_88/DoD_5220/GDPR/ISO_27001
+- **sanitization_result**: SUCCESS/FAILED/PARTIAL/VERIFIED
+- **sanitization_timestamp**: When completed
+- **sanitization_user**: Who performed the sanitization
+- **verification_method**: How sanitization was verified
+- **certificate_issued**: Whether certificate was issued
+- **certificate_reference**: Audit trail certificate reference
+- **data_classification**: PUBLIC/INTERNAL/CONFIDENTIAL/SECRET
 
 #### **Step 6: QualityAssessment**
 Quality assessment for any product:
-- **QualityGrade**: Overall grade using defined scale
-- **GradingScale**: Scale being used (A-F, 1-10, custom)
-- **CosmeticCondition**: Physical appearance assessment
-- **FunctionalCondition**: Operational capability assessment
-- **PerformanceScore**: Benchmark or performance metrics
-- **RefurbishmentActions**: List of refurbishment activities performed
-- **QualityCheckResults**: Final quality control outcomes
+- **assessment_identifier**: Unique quality assessment ID
+- **overall_grade**: Overall grade (A/B/C/D/F or custom)
+- **grading_scale**: LETTER/NUMERIC/PERCENTAGE/CUSTOM
+- **cosmetic_score**: Physical appearance score (0-100)
+- **functional_score**: Operational capability score (0-100)
+- **performance_score**: Performance metrics score (0-100)
+- **assessment_criteria**: Individual criteria with scores and weights
+- **quality_issues**: Issues found with type and severity
+- **certification_status**: CERTIFIED/REFURBISHED/WARRANTY/NONE
 
 #### **Step 7: ServiceActions**
 Service and repair actions performed:
-- **ActionIdentifier**: Unique action ID
-- **ActionType**: REPAIR/REPLACE/ADJUST/CLEAN/UPDATE/CALIBRATE
-- **ActionDescription**: What was done
-- **ComponentsAffected**: Which components were serviced
-- **PartsReplaced**: Old and new part numbers with quantities
-- **ActionOutcome**: SUCCESS/PARTIAL/FAILED
-- **TimeSpent**: Duration of the action
-- **TechnicianNotes**: Service notes and observations
+- **action_identifier**: Unique action ID
+- **action_type**: REPAIR/REPLACE/ADJUST/CALIBRATE/CLEAN/UPDATE/CONFIGURE
+- **action_description**: Description of action performed
+- **component_reference**: Reference to affected component
+- **action_timestamp**: When performed
+- **action_duration**: Time spent (minutes)
+- **performed_by**: Technician or system
+- **parts_replaced**: Old and new part numbers/serials
+- **action_result**: SUCCESS/FAILED/PARTIAL/PENDING
+- **follow_up_required**: Whether follow-up needed
 
 #### **Step 8: PredictiveAnalytics**
 Predictive maintenance and failure analysis:
-- **PredictionIdentifier**: Unique prediction ID
-- **PredictionModel**: Model/algorithm used
-- **ComponentReference**: Component being analyzed
-- **FailureProbability**: Likelihood of failure (0-100%)
-- **TimeToFailure**: Estimated time until failure
-- **ConfidenceLevel**: Statistical confidence in prediction
-- **RecommendedActions**: Preventive measures suggested
-- **MaintenanceUrgency**: IMMEDIATE/HIGH/MEDIUM/LOW
-- **CostBenefitAnalysis**: Economic impact assessment
+- **prediction_identifier**: Unique prediction ID
+- **component_reference**: Component being analyzed
+- **prediction_type**: FAILURE_RISK/MAINTENANCE_DUE/PERFORMANCE_DEGRADATION/END_OF_LIFE
+- **failure_probability**: Likelihood of failure (0-100%)
+- **time_to_failure**: Estimated time until failure (ISO 8601)
+- **confidence_level**: Statistical confidence in prediction (0-100%)
+- **prediction_model**: Model/algorithm used
+- **recommended_maintenance**: Preventive measures suggested
+- **urgency_level**: IMMEDIATE/HIGH/MEDIUM/LOW/SCHEDULED
+- **cost_estimate**: Economic impact assessment
+- **risk_factors**: Contributing factors with impact levels
 
 ### Data Properties
 
@@ -354,14 +368,14 @@ This identifier system enables seamless integration with databases and ensures c
 
 | Step | Component | Criticalities Identified | Solutions Implemented | Status | Missing/TODO |
 |------|-----------|-------------------------|----------------------|--------|--------------|
-| **1** | **DiagnosticEvent** | • Need for event tracking and context<br>• Diagnostic software tracking<br>• Environmental conditions<br>• Session quality metadata<br>• Multi-identifier tracking | • UUID-based event IDs<br>• DiagnosticSoftware with version/vendor/certification<br>• Environmental conditions capture<br>• Session metadata tracking<br>• Quality/confidence indicators<br>• Data completeness metrics | **TODO** | • Event correlation<br>• Software validation APIs |
-| **2** | **ComponentInventory** | • Generic component model<br>• Hierarchical relationships<br>• Product-agnostic design<br>• Flexible specifications | • Generic component classification<br>• Nested sub-components support<br>• Key-value specifications<br>• Component hierarchy tracking<br>• Version/revision management | **TODO** | • Component database<br>• Auto-discovery APIs |
-| **3** | **ComponentTestResults** | • Test standards traceability<br>• Calibration tracking<br>• Result confidence<br>• Comparison baselines | • Test protocol references<br>• Compliance standards<br>• Calibration traceability<br>• Baseline comparisons<br>• Test quality indicators<br>• Inconclusive result handling | **TODO** | • Test automation<br>• Standards library |
-| **4** | **ConditionMetrics** | • Generic metrics framework<br>• Health scoring<br>• Degradation tracking<br>• Life estimation | • Flexible metric types<br>• Unit-agnostic values<br>• Health percentage scale<br>• Degradation indicators<br>• Remaining life estimation | **TODO** | • Predictive models<br>• Trend analysis |
-| **5** | **DataSanitization** | • Any data-bearing component<br>• Method verification<br>• Standards compliance<br>• Audit trails | • Generic component support<br>• Method-appropriate techniques<br>• Verification tracking<br>• Certificate generation<br>• Compliance documentation | **TODO** | • Automated verification<br>• Blockchain certificates |
-| **6** | **QualityAssessment** | • Flexible grading scales<br>• Assessment criteria<br>• Quality checks<br>• Performance scoring | • Custom scale support<br>• Criteria documentation<br>• Cosmetic/functional split<br>• Performance metrics<br>• Quality check results | **TODO** | • ML-based assessment<br>• Criteria automation |
-| **7** | **ServiceActions** | • Service tracking<br>• Parts replacement<br>• Action outcomes<br>• Time documentation | • Action type classification<br>• Component linkage<br>• Parts tracking<br>• Outcome recording<br>• Time spent tracking | **TODO** | • Service automation<br>• Parts inventory |
-| **8** | **PredictiveAnalytics** | • Failure prediction<br>• Confidence levels<br>• Cost-benefit analysis<br>• Urgency classification | • Prediction models<br>• Probability calculations<br>• Time-to-failure estimates<br>• Action recommendations<br>• Economic analysis | **TODO** | • AI/ML integration<br>• Real-time updates |
+| **1** | **DiagnosticEvent** | • Need for event tracking and context<br>• Diagnostic software tracking<br>• Environmental conditions<br>• Session metadata<br>• Focus on diagnostic outputs only | • UUID-based event IDs with pattern validation<br>• DiagnosticSoftware with version/vendor/certification<br>• Environmental conditions (temp/humidity/pressure)<br>• Session metadata with duration/completion tracking<br>• Technician observations and failure descriptions<br>• Recommended actions field<br>• Removed redundant identifiers (relies on product-profile model) | **COMPLETE** | • Event correlation APIs<br>• Software validation APIs |
+| **2** | **ComponentInventory** | • Generic component model<br>• Hierarchical relationships<br>• Product-agnostic design<br>• Flexible specifications<br>• Hardware discovery | • Generic component classification with enums (type/category/status)<br>• Nested sub-components support<br>• Flexible key-value specifications<br>• Component hierarchy tracking<br>• Version/firmware/hardware ID management<br>• Component status detection (present/absent/operational)<br>• Support for any product type (electronics/vehicles/industrial) | **COMPLETE** | • Component database<br>• Auto-discovery APIs |
+| **3** | **ComponentTestResults** | • Test standards traceability<br>• Calibration tracking<br>• Result confidence<br>• Comparison baselines<br>• Observation tracking | • Test protocol and standard references<br>• Compliance requirements tracking<br>• Calibration status and traceability<br>• Measured vs expected values<br>• Test conditions capture<br>• Inconclusive reason handling<br>• Observation codes and notes<br>• Retest flags | **COMPLETE** | • Test automation<br>• Standards library |
+| **4** | **ConditionMetrics** | • Generic metrics framework<br>• Health scoring<br>• Degradation tracking<br>• Life estimation | • Flexible metric types (health/wear/performance/capacity)<br>• Current vs nominal value tracking<br>• Health score 0-100 scale<br>• Degradation rate and usage cycles<br>• Operating hours tracking<br>• Estimated remaining life (ISO 8601)<br>• Condition indicators with severity | **COMPLETE** | • Predictive models<br>• Trend analysis |
+| **5** | **DataSanitization** | • Any data-bearing component<br>• Method verification<br>• Standards compliance<br>• Audit trails | • Component reference linkage<br>• Multiple sanitization methods (overwrite/secure erase/degauss/physical/crypto)<br>• Standards compliance (NIST 800-88/DoD 5220/GDPR/ISO 27001)<br>• Verification method tracking<br>• Certificate issuance and reference<br>• Data classification levels<br>• User and timestamp tracking | **COMPLETE** | • Automated verification<br>• Blockchain certificates |
+| **6** | **QualityAssessment** | • Flexible grading scales<br>• Assessment criteria<br>• Quality checks<br>• Performance scoring | • Multiple grading scales (letter/numeric/percentage/custom)<br>• Separate cosmetic/functional/performance scores<br>• Weighted assessment criteria<br>• Quality issues with type and severity<br>• Certification status tracking<br>• Overall grade assignment | **COMPLETE** | • ML-based assessment<br>• Criteria automation |
+| **7** | **ServiceActions** | • Service tracking<br>• Parts replacement<br>• Action outcomes<br>• Time documentation | • Action type classification (repair/replace/adjust/calibrate/clean/update/configure)<br>• Component reference linkage<br>• Replaced parts tracking with old/new part numbers<br>• Action result recording (success/failed/partial/pending)<br>• Duration tracking in minutes<br>• Follow-up requirement flags<br>• Performer identification | **COMPLETE** | • Service automation<br>• Parts inventory |
+| **8** | **PredictiveAnalytics** | • Failure prediction<br>• Confidence levels<br>• Cost-benefit analysis<br>• Urgency classification | • Prediction types (failure risk/maintenance due/degradation/end-of-life)<br>• Failure probability 0-100%<br>• Time-to-failure estimates (ISO 8601)<br>• Confidence level tracking<br>• Prediction model/algorithm reference<br>• Recommended maintenance actions<br>• Urgency levels (immediate/high/medium/low/scheduled)<br>• Cost estimates<br>• Risk factor analysis with impact levels | **COMPLETE** | • AI/ML integration<br>• Real-time updates |
 
 ### Integration Opportunities
 
@@ -371,6 +385,7 @@ This identifier system enables seamless integration with databases and ensures c
 - **Usage and Maintenance Sync**: Results inform maintenance schedules and update usage patterns
 - **Compliance Updates**: Test results feed into compliance status and certification renewals
 - **LCA Impact**: Component replacements and failures inform environmental impact calculations
+- **Uncertainty and Quality**: Data quality, confidence levels, and uncertainty quantification handled by cross-cutting model
 
 **External System Integration:**
 - **CMMS/EAM Systems**: Computerized Maintenance Management System integration
