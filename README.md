@@ -1,6 +1,6 @@
 # CE-RISE Diagnostic Results
 
-[![DOI](https://zenodo.org/badge/DOI/TOBEOBTAINED.svg)](https://doi.org/TOBEOBTAINED) [![Schemas](https://img.shields.io/badge/Generated%20Schema%20Files-JSON%2C%20SHACL%2C%20OWL-32CD32)](https://ce-rise-models.codeberg.page/diagnostic-results/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17814486.svg)](https://doi.org/10.5281/zenodo.17814486) [![Schemas](https://img.shields.io/badge/Generated%20Schema%20Files-JSON%2C%20SHACL%2C%20OWL-32CD32)](https://ce-rise-models.codeberg.page/diagnostic-results/)
 
 The Diagnostic Results data model captures **structured outputs from diagnostic, repair, service, and condition-assessment operations** throughout a product's lifecycle. These are event-bound results that provide point-in-time assessments of product health, performance, and maintenance needs.
 
