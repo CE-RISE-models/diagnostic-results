@@ -1,20 +1,521 @@
-id: https://ce-rise-models.codeberg.page/template-data-model/
-name: template_data_model
+id: https://ce-rise-models.codeberg.page/diagnostic-results/
+name: diagnostic_results
+title: Diagnostic Results Data Model
+description: Structured outputs from diagnostic, repair, service, and condition-assessment operations
+license: https://creativecommons.org/licenses/by-nc/4.0/
+version: 0.0.1
+
 prefixes:
-  linkml: https://w3id.org/linkml/
+    linkml: https://w3id.org/linkml/
+    diag: https://ce-rise-models.codeberg.page/diagnostic-results/
+    schema: http://schema.org/
+    iso: https://www.iso.org/
+    dcterms: http://purl.org/dc/terms/
+    qudt: http://qudt.org/schema/qudt/
+    sosa: http://www.w3.org/ns/sosa/
+    ssn: http://www.w3.org/ns/ssn/
+    prov: http://www.w3.org/ns/prov#
+    foaf: http://xmlns.com/foaf/0.1/
+    org: http://www.w3.org/ns/org#
+    vcard: http://www.w3.org/2006/vcard/ns#
+    geo: http://www.w3.org/2003/01/geo/wgs84_pos#
+
 imports:
-  - linkml:types
+    - linkml:types
+
 default_range: string
+
+# Root class
 classes:
-  ExampleClass:
-    attributes:
-      example_attribute:
-        range: string
-        description: Example field
-slots:
-  label:
-    range: string
-    description: Human-readable label
-  sqlIdentifier:
-    range: string
-    description: Machine-friendly field name for databases
+    DiagnosticResults:
+        description: Root container for all diagnostic results and assessments
+        tree_root: true
+        attributes:
+            diagnostic_event:
+                range: DiagnosticEvent
+                description: Foundation diagnostic event with context
+                multivalued: true
+            component_inventory:
+                range: ComponentInventory
+                description: Components discovered during diagnostic
+                multivalued: true
+            component_test_results:
+                range: ComponentTestResults
+                description: Test results for components
+                multivalued: true
+            condition_metrics:
+                range: ConditionMetrics
+                description: Health and condition measurements
+                multivalued: true
+            data_sanitization:
+                range: DataSanitization
+                description: Data erasure and sanitization records
+                multivalued: true
+            quality_assessment:
+                range: QualityAssessment
+                description: Quality grading and assessment
+                multivalued: true
+            service_actions:
+                range: ServiceActions
+                description: Service and repair actions performed
+                multivalued: true
+            predictive_analytics:
+                range: PredictiveAnalytics
+                description: Predictive maintenance outputs
+                multivalued: true
+
+    DiagnosticEvent:
+        description: Foundation for all diagnostic activities with complete context
+        attributes:
+            event_identifier:
+                range: string
+                description: Unique identifier for diagnostic event UUID format
+                annotations:
+                    sql_identifier: diag_event_id
+                    owl.filler: dcterms:identifier
+                pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+
+            event_identifier_value:
+                range: string
+                description: Value holder for event identifier
+
+            event_timestamp:
+                range: datetime
+                description: When diagnostic occurred ISO 8601 with timezone
+                annotations:
+                    sql_identifier: diag_event_timestamp
+                    owl.filler: prov:generatedAtTime
+
+            event_timestamp_value:
+                range: string
+                description: Value holder for event timestamp
+
+            diagnostic_type:
+                range: string
+                description: Classification SERVICE SELF_TEST PREDICTIVE CALIBRATION INSPECTION
+                annotations:
+                    sql_identifier: diag_event_type
+                    owl.filler: dcterms:type
+
+            diagnostic_type_value:
+                range: string
+                description: Value holder for diagnostic type
+
+            performed_by:
+                range: string
+                description: Who or what performed diagnostic - technician ID system ID software
+                annotations:
+                    sql_identifier: diag_event_performed_by
+                    owl.filler: prov:wasAssociatedWith
+
+            performed_by_value:
+                range: string
+                description: Value holder for performed by
+
+            product_reference:
+                range: string
+                description: Link to product-profile identifiers GTIN plus serial
+                annotations:
+                    sql_identifier: diag_event_product_ref
+                    owl.filler: dcterms:references
+                pattern: "^([0-9]{14}:[A-Za-z0-9-]+|urn:epc:id:).*"
+
+            product_reference_value:
+                range: string
+                description: Value holder for product reference
+
+            location_reference:
+                range: string
+                description: Where performed facility GLN service center field location
+                annotations:
+                    sql_identifier: diag_event_location
+                    owl.filler: geo:location
+                pattern: "^([0-9]{13}|[A-Z]{2}[A-Z0-9]{3}).*"
+
+            location_reference_value:
+                range: string
+                description: Value holder for location reference
+
+            event_trigger:
+                range: string
+                description: What initiated diagnostic SCHEDULED FAILURE REQUEST QUALITY_CHECK INTAKE
+                annotations:
+                    sql_identifier: diag_event_trigger
+                    owl.filler: prov:wasStartedBy
+
+            event_trigger_value:
+                range: string
+                description: Value holder for event trigger
+
+            unit_identifier:
+                range: string
+                description: Internal tracking ID for specific unit
+                annotations:
+                    sql_identifier: diag_event_unit_id
+                    owl.filler: dcterms:identifier
+
+            unit_identifier_value:
+                range: string
+                description: Value holder for unit identifier
+
+            batch_identifier:
+                range: string
+                description: Batch or lot reference for grouped processing
+                annotations:
+                    sql_identifier: diag_event_batch_id
+                    owl.filler: schema:productionDate
+
+            batch_identifier_value:
+                range: string
+                description: Value holder for batch identifier
+
+            asset_reference:
+                range: string
+                description: Asset management tag for enterprise tracking
+                annotations:
+                    sql_identifier: diag_event_asset_ref
+                    owl.filler: schema:identifier
+
+            asset_reference_value:
+                range: string
+                description: Value holder for asset reference
+
+            diagnostic_software:
+                range: DiagnosticSoftware
+                description: Software or tool used for diagnostic
+
+            environmental_conditions:
+                range: EnvironmentalConditions
+                description: Environmental parameters during testing
+
+            session_metadata:
+                range: SessionMetadata
+                description: Diagnostic session tracking information
+
+            quality_metadata:
+                range: QualityMetadata
+                description: Result quality and confidence indicators
+
+    DiagnosticSoftware:
+        description: Information about diagnostic software or tool used
+        attributes:
+            tool_name:
+                range: string
+                description: Name of diagnostic software or tool
+                annotations:
+                    sql_identifier: diag_software_name
+                    owl.filler: schema:name
+
+            tool_name_value:
+                range: string
+                description: Value holder for tool name
+
+            tool_version:
+                range: string
+                description: Version of diagnostic software critical for reproducibility
+                annotations:
+                    sql_identifier: diag_software_version
+                    owl.filler: schema:version
+
+            tool_version_value:
+                range: string
+                description: Value holder for tool version
+
+            tool_vendor:
+                range: string
+                description: Vendor or manufacturer of diagnostic tool
+                annotations:
+                    sql_identifier: diag_software_vendor
+                    owl.filler: schema:manufacturer
+
+            tool_vendor_value:
+                range: string
+                description: Value holder for tool vendor
+
+            tool_certification:
+                range: string
+                description: Certification status if validated or certified tool
+                annotations:
+                    sql_identifier: diag_software_cert
+                    owl.filler: schema:certification
+
+            tool_certification_value:
+                range: string
+                description: Value holder for tool certification
+
+            tool_configuration:
+                range: string
+                description: Configuration settings used during diagnostic
+                annotations:
+                    sql_identifier: diag_software_config
+                    owl.filler: schema:softwareRequirements
+
+            tool_configuration_value:
+                range: string
+                description: Value holder for tool configuration
+
+    EnvironmentalConditions:
+        description: Environmental parameters during diagnostic testing
+        attributes:
+            ambient_temperature:
+                range: float
+                description: Temperature during testing in Celsius
+                annotations:
+                    sql_identifier: diag_env_temperature
+                    owl.filler: qudt:temperature
+                    unit: degreeCelsius
+
+            ambient_temperature_value:
+                range: string
+                description: Value holder for ambient temperature
+
+            humidity:
+                range: float
+                description: Relative humidity percentage during testing
+                annotations:
+                    sql_identifier: diag_env_humidity
+                    owl.filler: qudt:relativeHumidity
+                    unit: percent
+                minimum_value: 0.0
+                maximum_value: 100.0
+
+            humidity_value:
+                range: string
+                description: Value holder for humidity
+
+            pressure:
+                range: float
+                description: Atmospheric pressure in kPa
+                annotations:
+                    sql_identifier: diag_env_pressure
+                    owl.filler: qudt:pressure
+                    unit: kilopascal
+
+            pressure_value:
+                range: string
+                description: Value holder for pressure
+
+            test_environment:
+                range: string
+                description: Test environment type LAB FIELD FACTORY CUSTOMER_SITE
+                annotations:
+                    sql_identifier: diag_env_location_type
+                    owl.filler: prov:atLocation
+
+            test_environment_value:
+                range: string
+                description: Value holder for test environment
+
+            other_conditions:
+                range: string
+                description: Other relevant environmental conditions
+                annotations:
+                    sql_identifier: diag_env_other
+                    owl.filler: dcterms:description
+
+            other_conditions_value:
+                range: string
+                description: Value holder for other conditions
+
+    SessionMetadata:
+        description: Diagnostic session tracking and completeness
+        attributes:
+            session_duration:
+                range: string
+                description: Total session duration ISO 8601 format
+                annotations:
+                    sql_identifier: diag_session_duration
+                    owl.filler: dcterms:extent
+                pattern: "^P(?:\\d+Y)?(?:\\d+M)?(?:\\d+W)?(?:\\d+D)?(?:T(?:\\d+H)?(?:\\d+M)?(?:\\d+(?:\\.\\d+)?S)?)?$"
+
+            session_duration_value:
+                range: string
+                description: Value holder for session duration
+
+            test_sequence:
+                range: string
+                description: Order in which tests were performed
+                annotations:
+                    sql_identifier: diag_session_sequence
+                    owl.filler: prov:qualifiedAssociation
+
+            test_sequence_value:
+                range: string
+                description: Value holder for test sequence
+
+            tests_completed:
+                range: integer
+                description: Number of tests successfully completed
+                annotations:
+                    sql_identifier: diag_session_completed
+                    owl.filler: schema:numberOfItems
+
+            tests_completed_value:
+                range: string
+                description: Value holder for tests completed
+
+            tests_aborted:
+                range: integer
+                description: Number of tests aborted or failed to complete
+                annotations:
+                    sql_identifier: diag_session_aborted
+                    owl.filler: schema:numberOfItems
+
+            tests_aborted_value:
+                range: string
+                description: Value holder for tests aborted
+
+            abort_reasons:
+                range: string
+                description: Reasons for test abortions
+                annotations:
+                    sql_identifier: diag_session_abort_reasons
+                    owl.filler: dcterms:description
+
+            abort_reasons_value:
+                range: string
+                description: Value holder for abort reasons
+
+    QualityMetadata:
+        description: Result quality and confidence indicators
+        attributes:
+            data_completeness:
+                range: float
+                description: Percentage of tests completed 0 to 100
+                annotations:
+                    sql_identifier: diag_quality_completeness
+                    owl.filler: schema:ratingValue
+                    unit: percent
+                minimum_value: 0.0
+                maximum_value: 100.0
+
+            data_completeness_value:
+                range: string
+                description: Value holder for data completeness
+
+            result_confidence:
+                range: string
+                description: Confidence level HIGH MEDIUM LOW
+                annotations:
+                    sql_identifier: diag_quality_confidence
+                    owl.filler: schema:confidenceScore
+
+            result_confidence_value:
+                range: string
+                description: Value holder for result confidence
+
+            anomalies_detected:
+                range: string
+                description: Description of any anomalies detected during diagnostic
+                annotations:
+                    sql_identifier: diag_quality_anomalies
+                    owl.filler: sosa:hasResult
+
+            anomalies_detected_value:
+                range: string
+                description: Value holder for anomalies detected
+
+    # Placeholder for other classes
+    ComponentInventory:
+        description: Placeholder for component inventory
+        attributes:
+            placeholder:
+                range: string
+
+    ComponentTestResults:
+        description: Placeholder for component test results
+        attributes:
+            placeholder:
+                range: string
+
+    ConditionMetrics:
+        description: Placeholder for condition metrics
+        attributes:
+            placeholder:
+                range: string
+
+    DataSanitization:
+        description: Placeholder for data sanitization
+        attributes:
+            placeholder:
+                range: string
+
+    QualityAssessment:
+        description: Placeholder for quality assessment
+        attributes:
+            placeholder:
+                range: string
+
+    ServiceActions:
+        description: Placeholder for service actions
+        attributes:
+            placeholder:
+                range: string
+
+    PredictiveAnalytics:
+        description: Placeholder for predictive analytics
+        attributes:
+            placeholder:
+                range: string
+
+# Enumerations
+enums:
+    DiagnosticTypeEnum:
+        description: Types of diagnostic activities
+        permissible_values:
+            SERVICE:
+                description: Service or maintenance diagnostic
+            SELF_TEST:
+                description: Automated self-diagnostic test
+            PREDICTIVE:
+                description: Predictive maintenance analysis
+            CALIBRATION:
+                description: Calibration verification
+            INSPECTION:
+                description: Quality inspection or audit
+            REFURBISHMENT:
+                description: Refurbishment assessment
+
+    EventTriggerEnum:
+        description: What triggered the diagnostic event
+        permissible_values:
+            SCHEDULED:
+                description: Regularly scheduled diagnostic
+            FAILURE:
+                description: Triggered by failure or malfunction
+            REQUEST:
+                description: Manual request for diagnostic
+            QUALITY_CHECK:
+                description: Quality control check
+            INTAKE:
+                description: Initial intake assessment
+            ALERT:
+                description: Triggered by alert or threshold
+
+    TestEnvironmentEnum:
+        description: Type of test environment
+        permissible_values:
+            LAB:
+                description: Laboratory environment
+            FIELD:
+                description: Field or on-site location
+            FACTORY:
+                description: Manufacturing facility
+            CUSTOMER_SITE:
+                description: Customer location
+            SERVICE_CENTER:
+                description: Service or repair center
+            REMOTE:
+                description: Remote diagnostic
+
+    ConfidenceLevelEnum:
+        description: Confidence level in results
+        permissible_values:
+            HIGH:
+                description: High confidence in results
+            MEDIUM:
+                description: Medium confidence in results
+            LOW:
+                description: Low confidence in results
+            UNKNOWN:
+                description: Confidence level unknown
