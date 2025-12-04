@@ -1,0 +1,1321 @@
+WARNING:linkml.generators.owlgen:Ambiguous attribute: placeholder https://ce-rise-models.codeberg.page/diagnostic-results/placeholder
+WARNING:linkml.generators.owlgen:Ambiguous attribute: placeholder https://ce-rise-models.codeberg.page/diagnostic-results/placeholder
+WARNING:linkml.generators.owlgen:Ambiguous attribute: placeholder https://ce-rise-models.codeberg.page/diagnostic-results/placeholder
+WARNING:linkml.generators.owlgen:Ambiguous attribute: placeholder https://ce-rise-models.codeberg.page/diagnostic-results/placeholder
+WARNING:linkml.generators.owlgen:Ambiguous attribute: placeholder https://ce-rise-models.codeberg.page/diagnostic-results/placeholder
+WARNING:linkml.generators.owlgen:Ambiguous attribute: placeholder https://ce-rise-models.codeberg.page/diagnostic-results/placeholder
+WARNING:linkml.generators.owlgen:Ambiguous attribute: placeholder https://ce-rise-models.codeberg.page/diagnostic-results/placeholder
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix diag: <https://ce-rise-models.codeberg.page/diagnostic-results/> .
+@prefix linkml: <https://w3id.org/linkml/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/.owl.ttl> a owl:Ontology ;
+    rdfs:label "diagnostic-results" ;
+    dcterms:license "https://creativecommons.org/licenses/by-nc/4.0/" ;
+    dcterms:title "Diagnostic Results Data Model" ;
+    pav:version "0.0.2" ;
+    skos:definition "Structured outputs from diagnostic, repair, service, and condition-assessment operations" .
+
+diag:DiagnosticResults a owl:Class ;
+    rdfs:label "DiagnosticResults" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom diag:ConditionMetrics ;
+            owl:onProperty diag:condition_metrics ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom diag:QualityAssessment ;
+            owl:onProperty diag:quality_assessment ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom diag:ComponentTestResults ;
+            owl:onProperty diag:component_test_results ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom diag:ServiceActions ;
+            owl:onProperty diag:service_actions ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:component_test_results ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:data_sanitization ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom diag:DataSanitization ;
+            owl:onProperty diag:data_sanitization ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:condition_metrics ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:quality_assessment ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom diag:ComponentInventory ;
+            owl:onProperty diag:component_inventory ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:service_actions ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:diagnostic_event ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom diag:PredictiveAnalytics ;
+            owl:onProperty diag:predictive_analytics ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom diag:DiagnosticEvent ;
+            owl:onProperty diag:diagnostic_event ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:component_inventory ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:predictive_analytics ] ;
+    skos:definition "Root container for all diagnostic results and assessments" ;
+    skos:inScheme diag: .
+
+diag:ComponentInventory a owl:Class ;
+    rdfs:label "ComponentInventory" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:placeholder ] ;
+    skos:definition "Placeholder for component inventory" ;
+    skos:inScheme diag: .
+
+diag:ComponentTestResults a owl:Class ;
+    rdfs:label "ComponentTestResults" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:placeholder ] ;
+    skos:definition "Placeholder for component test results" ;
+    skos:inScheme diag: .
+
+diag:ConditionMetrics a owl:Class ;
+    rdfs:label "ConditionMetrics" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:placeholder ] ;
+    skos:definition "Placeholder for condition metrics" ;
+    skos:inScheme diag: .
+
+diag:DataSanitization a owl:Class ;
+    rdfs:label "DataSanitization" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:placeholder ] ;
+    skos:definition "Placeholder for data sanitization" ;
+    skos:inScheme diag: .
+
+diag:DiagnosticEvent a owl:Class ;
+    rdfs:label "DiagnosticEvent" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:location_reference_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:unit_identifier ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:event_identifier ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:quality_metadata ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:asset_reference_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:diagnostic_software ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom diag:QualityMetadata ;
+            owl:onProperty diag:quality_metadata ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:event_trigger_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:performed_by_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:performed_by ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:asset_reference ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:performed_by ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:event_timestamp_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:unit_identifier_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:asset_reference ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:product_reference_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:session_metadata ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:event_trigger_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:event_identifier_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:product_reference_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:product_reference ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:product_reference ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" ] ) ] ) ] ;
+            owl:onProperty diag:event_identifier ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:unit_identifier ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:batch_identifier ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:unit_identifier ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:unit_identifier_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:product_reference_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:event_timestamp ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:diagnostic_software ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:location_reference_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:diagnostic_type ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:event_trigger ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:diagnostic_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^([0-9]{14}:[A-Za-z0-9-]+|urn:epc:id:).*" ] ) ] ) ] ;
+            owl:onProperty diag:product_reference ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:unit_identifier_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom diag:EnvironmentalConditions ;
+            owl:onProperty diag:environmental_conditions ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:event_timestamp ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:session_metadata ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:dateTime ;
+            owl:onProperty diag:event_timestamp ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:asset_reference_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:event_identifier ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:batch_identifier ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:asset_reference ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:batch_identifier_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:event_trigger ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:batch_identifier ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:event_identifier_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:event_identifier_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:performed_by ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:location_reference_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:diagnostic_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:asset_reference_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:event_trigger ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:event_timestamp_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:location_reference ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:performed_by_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:environmental_conditions ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:batch_identifier_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom diag:SessionMetadata ;
+            owl:onProperty diag:session_metadata ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:diagnostic_type_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom diag:DiagnosticSoftware ;
+            owl:onProperty diag:diagnostic_software ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:location_reference ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:environmental_conditions ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:event_timestamp_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^([0-9]{13}|[A-Z]{2}[A-Z0-9]{3}).*" ] ) ] ) ] ;
+            owl:onProperty diag:location_reference ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:diagnostic_type_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:diagnostic_type_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:performed_by_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:batch_identifier_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:quality_metadata ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:event_trigger_value ] ;
+    skos:definition "Foundation for all diagnostic activities with complete context" ;
+    skos:inScheme diag: .
+
+diag:DiagnosticSoftware a owl:Class ;
+    rdfs:label "DiagnosticSoftware" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tool_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tool_vendor ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tool_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tool_configuration ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tool_configuration_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tool_certification_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tool_version_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tool_version ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tool_certification ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tool_vendor_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tool_configuration ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tool_certification_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tool_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tool_configuration_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tool_vendor_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tool_name_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tool_configuration_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tool_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tool_vendor ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tool_name_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tool_version_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tool_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tool_vendor ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tool_version_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tool_vendor_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tool_configuration ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tool_certification ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tool_name_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tool_certification ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tool_certification_value ] ;
+    skos:definition "Information about diagnostic software or tool used" ;
+    skos:inScheme diag: .
+
+diag:EnvironmentalConditions a owl:Class ;
+    rdfs:label "EnvironmentalConditions" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:test_environment_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:pressure_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty diag:pressure ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:float [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive 1e+02 ] ) ] ) ] ;
+            owl:onProperty diag:humidity ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:pressure_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:other_conditions ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:ambient_temperature_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:test_environment ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:humidity_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:ambient_temperature_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:pressure ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:other_conditions ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:test_environment_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:ambient_temperature ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:other_conditions_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:test_environment ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:humidity_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:pressure_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:other_conditions_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:other_conditions ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:humidity ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:humidity_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:test_environment_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:test_environment ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:humidity ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:other_conditions_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:ambient_temperature_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:pressure ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty diag:ambient_temperature ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:ambient_temperature ] ;
+    skos:definition "Environmental parameters during diagnostic testing" ;
+    skos:inScheme diag: .
+
+diag:PredictiveAnalytics a owl:Class ;
+    rdfs:label "PredictiveAnalytics" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:placeholder ] ;
+    skos:definition "Placeholder for predictive analytics" ;
+    skos:inScheme diag: .
+
+diag:QualityAssessment a owl:Class ;
+    rdfs:label "QualityAssessment" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:placeholder ] ;
+    skos:definition "Placeholder for quality assessment" ;
+    skos:inScheme diag: .
+
+diag:QualityMetadata a owl:Class ;
+    rdfs:label "QualityMetadata" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:result_confidence ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:result_confidence_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:anomalies_detected ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:anomalies_detected_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:data_completeness_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:data_completeness_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:anomalies_detected ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:anomalies_detected_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:float [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:minInclusive 0e+00 ] ) ] [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:float ;
+                                owl:withRestrictions ( [ xsd:maxInclusive 1e+02 ] ) ] ) ] ;
+            owl:onProperty diag:data_completeness ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:anomalies_detected_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:result_confidence_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:data_completeness ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:result_confidence_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:anomalies_detected ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:data_completeness_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:result_confidence ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:data_completeness ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:result_confidence ] ;
+    skos:definition "Result quality and confidence indicators" ;
+    skos:inScheme diag: .
+
+diag:ServiceActions a owl:Class ;
+    rdfs:label "ServiceActions" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:placeholder ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:placeholder ] ;
+    skos:definition "Placeholder for service actions" ;
+    skos:inScheme diag: .
+
+diag:SessionMetadata a owl:Class ;
+    rdfs:label "SessionMetadata" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:test_sequence_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:test_sequence ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:abort_reasons ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:session_duration_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:abort_reasons_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:abort_reasons_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tests_completed_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:abort_reasons_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:tests_aborted_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:test_sequence ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:test_sequence ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tests_completed_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty diag:tests_aborted ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:session_duration_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:test_sequence_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty diag:tests_completed ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tests_completed_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:test_sequence_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tests_completed ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:session_duration ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tests_aborted ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:session_duration_value ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:tests_aborted_value ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tests_aborted_value ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty diag:abort_reasons ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:session_duration ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty diag:abort_reasons ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^P(?:\\d+Y)?(?:\\d+M)?(?:\\d+W)?(?:\\d+D)?(?:T(?:\\d+H)?(?:\\d+M)?(?:\\d+(?:\\.\\d+)?S)?)?$" ] ) ] ) ] ;
+            owl:onProperty diag:session_duration ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tests_aborted ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty diag:tests_completed ] ;
+    skos:definition "Diagnostic session tracking and completeness" ;
+    skos:inScheme diag: .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#HIGH> a owl:Class ;
+    rdfs:label "HIGH" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum> ;
+    skos:definition "High confidence in results" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#LOW> a owl:Class ;
+    rdfs:label "LOW" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum> ;
+    skos:definition "Low confidence in results" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#MEDIUM> a owl:Class ;
+    rdfs:label "MEDIUM" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum> ;
+    skos:definition "Medium confidence in results" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#UNKNOWN> a owl:Class ;
+    rdfs:label "UNKNOWN" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum> ;
+    skos:definition "Confidence level unknown" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#CALIBRATION> a owl:Class ;
+    rdfs:label "CALIBRATION" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum> ;
+    skos:definition "Calibration verification" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#INSPECTION> a owl:Class ;
+    rdfs:label "INSPECTION" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum> ;
+    skos:definition "Quality inspection or audit" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#PREDICTIVE> a owl:Class ;
+    rdfs:label "PREDICTIVE" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum> ;
+    skos:definition "Predictive maintenance analysis" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#REFURBISHMENT> a owl:Class ;
+    rdfs:label "REFURBISHMENT" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum> ;
+    skos:definition "Refurbishment assessment" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#SELF_TEST> a owl:Class ;
+    rdfs:label "SELF_TEST" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum> ;
+    skos:definition "Automated self-diagnostic test" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#SERVICE> a owl:Class ;
+    rdfs:label "SERVICE" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum> ;
+    skos:definition "Service or maintenance diagnostic" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#ALERT> a owl:Class ;
+    rdfs:label "ALERT" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum> ;
+    skos:definition "Triggered by alert or threshold" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#FAILURE> a owl:Class ;
+    rdfs:label "FAILURE" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum> ;
+    skos:definition "Triggered by failure or malfunction" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#INTAKE> a owl:Class ;
+    rdfs:label "INTAKE" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum> ;
+    skos:definition "Initial intake assessment" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#QUALITY_CHECK> a owl:Class ;
+    rdfs:label "QUALITY_CHECK" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum> ;
+    skos:definition "Quality control check" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#REQUEST> a owl:Class ;
+    rdfs:label "REQUEST" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum> ;
+    skos:definition "Manual request for diagnostic" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#SCHEDULED> a owl:Class ;
+    rdfs:label "SCHEDULED" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum> ;
+    skos:definition "Regularly scheduled diagnostic" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#CUSTOMER_SITE> a owl:Class ;
+    rdfs:label "CUSTOMER_SITE" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum> ;
+    skos:definition "Customer location" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#FACTORY> a owl:Class ;
+    rdfs:label "FACTORY" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum> ;
+    skos:definition "Manufacturing facility" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#FIELD> a owl:Class ;
+    rdfs:label "FIELD" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum> ;
+    skos:definition "Field or on-site location" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#LAB> a owl:Class ;
+    rdfs:label "LAB" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum> ;
+    skos:definition "Laboratory environment" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#REMOTE> a owl:Class ;
+    rdfs:label "REMOTE" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum> ;
+    skos:definition "Remote diagnostic" .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#SERVICE_CENTER> a owl:Class ;
+    rdfs:label "SERVICE_CENTER" ;
+    rdfs:subClassOf <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum> ;
+    skos:definition "Service or repair center" .
+
+diag:component_inventory a owl:ObjectProperty ;
+    rdfs:label "component_inventory" ;
+    skos:definition "Components discovered during diagnostic" ;
+    skos:inScheme diag: .
+
+diag:component_test_results a owl:ObjectProperty ;
+    rdfs:label "component_test_results" ;
+    skos:definition "Test results for components" ;
+    skos:inScheme diag: .
+
+diag:condition_metrics a owl:ObjectProperty ;
+    rdfs:label "condition_metrics" ;
+    skos:definition "Health and condition measurements" ;
+    skos:inScheme diag: .
+
+diag:data_sanitization a owl:ObjectProperty ;
+    rdfs:label "data_sanitization" ;
+    skos:definition "Data erasure and sanitization records" ;
+    skos:inScheme diag: .
+
+diag:diagnostic_event a owl:ObjectProperty ;
+    rdfs:label "diagnostic_event" ;
+    skos:definition "Foundation diagnostic event with context" ;
+    skos:inScheme diag: .
+
+diag:predictive_analytics a owl:ObjectProperty ;
+    rdfs:label "predictive_analytics" ;
+    skos:definition "Predictive maintenance outputs" ;
+    skos:inScheme diag: .
+
+diag:quality_assessment a owl:ObjectProperty ;
+    rdfs:label "quality_assessment" ;
+    skos:definition "Quality grading and assessment" ;
+    skos:inScheme diag: .
+
+diag:service_actions a owl:ObjectProperty ;
+    rdfs:label "service_actions" ;
+    skos:definition "Service and repair actions performed" ;
+    skos:inScheme diag: .
+
+diag:abort_reasons a owl:DatatypeProperty ;
+    rdfs:label "abort_reasons" ;
+    skos:definition "Reasons for test abortions" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "dcterms:description" ;
+    diag:sql_identifier "diag_session_abort_reasons" .
+
+diag:abort_reasons_value a owl:DatatypeProperty ;
+    rdfs:label "abort_reasons_value" ;
+    skos:definition "Value holder for abort reasons" ;
+    skos:inScheme diag: .
+
+diag:ambient_temperature a owl:DatatypeProperty ;
+    rdfs:label "ambient_temperature" ;
+    skos:definition "Temperature during testing in Celsius" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "qudt:temperature" ;
+    diag:sql_identifier "diag_env_temperature" ;
+    diag:unit "degreeCelsius" .
+
+diag:ambient_temperature_value a owl:DatatypeProperty ;
+    rdfs:label "ambient_temperature_value" ;
+    skos:definition "Value holder for ambient temperature" ;
+    skos:inScheme diag: .
+
+diag:anomalies_detected a owl:DatatypeProperty ;
+    rdfs:label "anomalies_detected" ;
+    skos:definition "Description of any anomalies detected during diagnostic" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "sosa:hasResult" ;
+    diag:sql_identifier "diag_quality_anomalies" .
+
+diag:anomalies_detected_value a owl:DatatypeProperty ;
+    rdfs:label "anomalies_detected_value" ;
+    skos:definition "Value holder for anomalies detected" ;
+    skos:inScheme diag: .
+
+diag:asset_reference a owl:DatatypeProperty ;
+    rdfs:label "asset_reference" ;
+    skos:definition "Asset management tag for enterprise tracking" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "schema:identifier" ;
+    diag:sql_identifier "diag_event_asset_ref" .
+
+diag:asset_reference_value a owl:DatatypeProperty ;
+    rdfs:label "asset_reference_value" ;
+    skos:definition "Value holder for asset reference" ;
+    skos:inScheme diag: .
+
+diag:batch_identifier a owl:DatatypeProperty ;
+    rdfs:label "batch_identifier" ;
+    skos:definition "Batch or lot reference for grouped processing" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "schema:productionDate" ;
+    diag:sql_identifier "diag_event_batch_id" .
+
+diag:batch_identifier_value a owl:DatatypeProperty ;
+    rdfs:label "batch_identifier_value" ;
+    skos:definition "Value holder for batch identifier" ;
+    skos:inScheme diag: .
+
+diag:data_completeness a owl:DatatypeProperty ;
+    rdfs:label "data_completeness" ;
+    skos:definition "Percentage of tests completed 0 to 100" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "schema:ratingValue" ;
+    diag:sql_identifier "diag_quality_completeness" ;
+    diag:unit "percent" .
+
+diag:data_completeness_value a owl:DatatypeProperty ;
+    rdfs:label "data_completeness_value" ;
+    skos:definition "Value holder for data completeness" ;
+    skos:inScheme diag: .
+
+diag:diagnostic_software a owl:ObjectProperty ;
+    rdfs:label "diagnostic_software" ;
+    skos:definition "Software or tool used for diagnostic" ;
+    skos:inScheme diag: .
+
+diag:diagnostic_type a owl:DatatypeProperty ;
+    rdfs:label "diagnostic_type" ;
+    skos:definition "Classification SERVICE SELF_TEST PREDICTIVE CALIBRATION INSPECTION" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "dcterms:type" ;
+    diag:sql_identifier "diag_event_type" .
+
+diag:diagnostic_type_value a owl:DatatypeProperty ;
+    rdfs:label "diagnostic_type_value" ;
+    skos:definition "Value holder for diagnostic type" ;
+    skos:inScheme diag: .
+
+diag:environmental_conditions a owl:ObjectProperty ;
+    rdfs:label "environmental_conditions" ;
+    skos:definition "Environmental parameters during testing" ;
+    skos:inScheme diag: .
+
+diag:event_identifier a owl:DatatypeProperty ;
+    rdfs:label "event_identifier" ;
+    skos:definition "Unique identifier for diagnostic event UUID format" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "dcterms:identifier" ;
+    diag:sql_identifier "diag_event_id" .
+
+diag:event_identifier_value a owl:DatatypeProperty ;
+    rdfs:label "event_identifier_value" ;
+    skos:definition "Value holder for event identifier" ;
+    skos:inScheme diag: .
+
+diag:event_timestamp a owl:DatatypeProperty ;
+    rdfs:label "event_timestamp" ;
+    skos:definition "When diagnostic occurred ISO 8601 with timezone" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "prov:generatedAtTime" ;
+    diag:sql_identifier "diag_event_timestamp" .
+
+diag:event_timestamp_value a owl:DatatypeProperty ;
+    rdfs:label "event_timestamp_value" ;
+    skos:definition "Value holder for event timestamp" ;
+    skos:inScheme diag: .
+
+diag:event_trigger a owl:DatatypeProperty ;
+    rdfs:label "event_trigger" ;
+    skos:definition "What initiated diagnostic SCHEDULED FAILURE REQUEST QUALITY_CHECK INTAKE" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "prov:wasStartedBy" ;
+    diag:sql_identifier "diag_event_trigger" .
+
+diag:event_trigger_value a owl:DatatypeProperty ;
+    rdfs:label "event_trigger_value" ;
+    skos:definition "Value holder for event trigger" ;
+    skos:inScheme diag: .
+
+diag:humidity a owl:DatatypeProperty ;
+    rdfs:label "humidity" ;
+    skos:definition "Relative humidity percentage during testing" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "qudt:relativeHumidity" ;
+    diag:sql_identifier "diag_env_humidity" ;
+    diag:unit "percent" .
+
+diag:humidity_value a owl:DatatypeProperty ;
+    rdfs:label "humidity_value" ;
+    skos:definition "Value holder for humidity" ;
+    skos:inScheme diag: .
+
+diag:location_reference a owl:DatatypeProperty ;
+    rdfs:label "location_reference" ;
+    skos:definition "Where performed facility GLN service center field location" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "geo:location" ;
+    diag:sql_identifier "diag_event_location" .
+
+diag:location_reference_value a owl:DatatypeProperty ;
+    rdfs:label "location_reference_value" ;
+    skos:definition "Value holder for location reference" ;
+    skos:inScheme diag: .
+
+diag:other_conditions a owl:DatatypeProperty ;
+    rdfs:label "other_conditions" ;
+    skos:definition "Other relevant environmental conditions" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "dcterms:description" ;
+    diag:sql_identifier "diag_env_other" .
+
+diag:other_conditions_value a owl:DatatypeProperty ;
+    rdfs:label "other_conditions_value" ;
+    skos:definition "Value holder for other conditions" ;
+    skos:inScheme diag: .
+
+diag:performed_by a owl:DatatypeProperty ;
+    rdfs:label "performed_by" ;
+    skos:definition "Who or what performed diagnostic - technician ID system ID software" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "prov:wasAssociatedWith" ;
+    diag:sql_identifier "diag_event_performed_by" .
+
+diag:performed_by_value a owl:DatatypeProperty ;
+    rdfs:label "performed_by_value" ;
+    skos:definition "Value holder for performed by" ;
+    skos:inScheme diag: .
+
+diag:pressure a owl:DatatypeProperty ;
+    rdfs:label "pressure" ;
+    skos:definition "Atmospheric pressure in kPa" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "qudt:pressure" ;
+    diag:sql_identifier "diag_env_pressure" ;
+    diag:unit "kilopascal" .
+
+diag:pressure_value a owl:DatatypeProperty ;
+    rdfs:label "pressure_value" ;
+    skos:definition "Value holder for pressure" ;
+    skos:inScheme diag: .
+
+diag:product_reference a owl:DatatypeProperty ;
+    rdfs:label "product_reference" ;
+    skos:definition "Link to product-profile identifiers GTIN plus serial" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "dcterms:references" ;
+    diag:sql_identifier "diag_event_product_ref" .
+
+diag:product_reference_value a owl:DatatypeProperty ;
+    rdfs:label "product_reference_value" ;
+    skos:definition "Value holder for product reference" ;
+    skos:inScheme diag: .
+
+diag:quality_metadata a owl:ObjectProperty ;
+    rdfs:label "quality_metadata" ;
+    skos:definition "Result quality and confidence indicators" ;
+    skos:inScheme diag: .
+
+diag:result_confidence a owl:DatatypeProperty ;
+    rdfs:label "result_confidence" ;
+    skos:definition "Confidence level HIGH MEDIUM LOW" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "schema:confidenceScore" ;
+    diag:sql_identifier "diag_quality_confidence" .
+
+diag:result_confidence_value a owl:DatatypeProperty ;
+    rdfs:label "result_confidence_value" ;
+    skos:definition "Value holder for result confidence" ;
+    skos:inScheme diag: .
+
+diag:session_duration a owl:DatatypeProperty ;
+    rdfs:label "session_duration" ;
+    skos:definition "Total session duration ISO 8601 format" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "dcterms:extent" ;
+    diag:sql_identifier "diag_session_duration" .
+
+diag:session_duration_value a owl:DatatypeProperty ;
+    rdfs:label "session_duration_value" ;
+    skos:definition "Value holder for session duration" ;
+    skos:inScheme diag: .
+
+diag:session_metadata a owl:ObjectProperty ;
+    rdfs:label "session_metadata" ;
+    skos:definition "Diagnostic session tracking information" ;
+    skos:inScheme diag: .
+
+diag:test_environment a owl:DatatypeProperty ;
+    rdfs:label "test_environment" ;
+    skos:definition "Test environment type LAB FIELD FACTORY CUSTOMER_SITE" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "prov:atLocation" ;
+    diag:sql_identifier "diag_env_location_type" .
+
+diag:test_environment_value a owl:DatatypeProperty ;
+    rdfs:label "test_environment_value" ;
+    skos:definition "Value holder for test environment" ;
+    skos:inScheme diag: .
+
+diag:test_sequence a owl:DatatypeProperty ;
+    rdfs:label "test_sequence" ;
+    skos:definition "Order in which tests were performed" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "prov:qualifiedAssociation" ;
+    diag:sql_identifier "diag_session_sequence" .
+
+diag:test_sequence_value a owl:DatatypeProperty ;
+    rdfs:label "test_sequence_value" ;
+    skos:definition "Value holder for test sequence" ;
+    skos:inScheme diag: .
+
+diag:tests_aborted a owl:DatatypeProperty ;
+    rdfs:label "tests_aborted" ;
+    skos:definition "Number of tests aborted or failed to complete" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "schema:numberOfItems" ;
+    diag:sql_identifier "diag_session_aborted" .
+
+diag:tests_aborted_value a owl:DatatypeProperty ;
+    rdfs:label "tests_aborted_value" ;
+    skos:definition "Value holder for tests aborted" ;
+    skos:inScheme diag: .
+
+diag:tests_completed a owl:DatatypeProperty ;
+    rdfs:label "tests_completed" ;
+    skos:definition "Number of tests successfully completed" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "schema:numberOfItems" ;
+    diag:sql_identifier "diag_session_completed" .
+
+diag:tests_completed_value a owl:DatatypeProperty ;
+    rdfs:label "tests_completed_value" ;
+    skos:definition "Value holder for tests completed" ;
+    skos:inScheme diag: .
+
+diag:tool_certification a owl:DatatypeProperty ;
+    rdfs:label "tool_certification" ;
+    skos:definition "Certification status if validated or certified tool" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "schema:certification" ;
+    diag:sql_identifier "diag_software_cert" .
+
+diag:tool_certification_value a owl:DatatypeProperty ;
+    rdfs:label "tool_certification_value" ;
+    skos:definition "Value holder for tool certification" ;
+    skos:inScheme diag: .
+
+diag:tool_configuration a owl:DatatypeProperty ;
+    rdfs:label "tool_configuration" ;
+    skos:definition "Configuration settings used during diagnostic" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "schema:softwareRequirements" ;
+    diag:sql_identifier "diag_software_config" .
+
+diag:tool_configuration_value a owl:DatatypeProperty ;
+    rdfs:label "tool_configuration_value" ;
+    skos:definition "Value holder for tool configuration" ;
+    skos:inScheme diag: .
+
+diag:tool_name a owl:DatatypeProperty ;
+    rdfs:label "tool_name" ;
+    skos:definition "Name of diagnostic software or tool" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "schema:name" ;
+    diag:sql_identifier "diag_software_name" .
+
+diag:tool_name_value a owl:DatatypeProperty ;
+    rdfs:label "tool_name_value" ;
+    skos:definition "Value holder for tool name" ;
+    skos:inScheme diag: .
+
+diag:tool_vendor a owl:DatatypeProperty ;
+    rdfs:label "tool_vendor" ;
+    skos:definition "Vendor or manufacturer of diagnostic tool" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "schema:manufacturer" ;
+    diag:sql_identifier "diag_software_vendor" .
+
+diag:tool_vendor_value a owl:DatatypeProperty ;
+    rdfs:label "tool_vendor_value" ;
+    skos:definition "Value holder for tool vendor" ;
+    skos:inScheme diag: .
+
+diag:tool_version a owl:DatatypeProperty ;
+    rdfs:label "tool_version" ;
+    skos:definition "Version of diagnostic software critical for reproducibility" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "schema:version" ;
+    diag:sql_identifier "diag_software_version" .
+
+diag:tool_version_value a owl:DatatypeProperty ;
+    rdfs:label "tool_version_value" ;
+    skos:definition "Value holder for tool version" ;
+    skos:inScheme diag: .
+
+diag:unit_identifier a owl:DatatypeProperty ;
+    rdfs:label "unit_identifier" ;
+    skos:definition "Internal tracking ID for specific unit" ;
+    skos:inScheme diag: ;
+    diag:owl.filler "dcterms:identifier" ;
+    diag:sql_identifier "diag_event_unit_id" .
+
+diag:unit_identifier_value a owl:DatatypeProperty ;
+    rdfs:label "unit_identifier_value" ;
+    skos:definition "Value holder for unit identifier" ;
+    skos:inScheme diag: .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum> a owl:Class ;
+    rdfs:label "ConfidenceLevelEnum" ;
+    owl:unionOf ( <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#HIGH> <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#MEDIUM> <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#LOW> <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#UNKNOWN> ) ;
+    skos:definition "Confidence level in results" ;
+    skos:inScheme diag: ;
+    linkml:permissible_values <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#HIGH>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#LOW>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#MEDIUM>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:ConfidenceLevelEnum#UNKNOWN> .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum> a owl:Class ;
+    rdfs:label "DiagnosticTypeEnum" ;
+    owl:unionOf ( <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#SERVICE> <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#SELF_TEST> <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#PREDICTIVE> <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#CALIBRATION> <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#INSPECTION> <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#REFURBISHMENT> ) ;
+    skos:definition "Types of diagnostic activities" ;
+    skos:inScheme diag: ;
+    linkml:permissible_values <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#CALIBRATION>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#INSPECTION>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#PREDICTIVE>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#REFURBISHMENT>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#SELF_TEST>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:DiagnosticTypeEnum#SERVICE> .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum> a owl:Class ;
+    rdfs:label "EventTriggerEnum" ;
+    owl:unionOf ( <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#SCHEDULED> <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#FAILURE> <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#REQUEST> <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#QUALITY_CHECK> <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#INTAKE> <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#ALERT> ) ;
+    skos:definition "What triggered the diagnostic event" ;
+    skos:inScheme diag: ;
+    linkml:permissible_values <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#ALERT>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#FAILURE>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#INTAKE>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#QUALITY_CHECK>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#REQUEST>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:EventTriggerEnum#SCHEDULED> .
+
+<https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum> a owl:Class ;
+    rdfs:label "TestEnvironmentEnum" ;
+    owl:unionOf ( <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#LAB> <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#FIELD> <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#FACTORY> <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#CUSTOMER_SITE> <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#SERVICE_CENTER> <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#REMOTE> ) ;
+    skos:definition "Type of test environment" ;
+    skos:inScheme diag: ;
+    linkml:permissible_values <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#CUSTOMER_SITE>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#FACTORY>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#FIELD>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#LAB>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#REMOTE>,
+        <https://ce-rise-models.codeberg.page/diagnostic-results/:TestEnvironmentEnum#SERVICE_CENTER> .
+
+diag:placeholder a owl:DatatypeProperty .
+
+
