@@ -421,6 +421,7 @@ https://codeberg.org/CE-RISE-models/diagnostic-results/src/tag/pages-v1.2.0/gene
 
 Files available in that directory typically include:
 
+- schema.yaml
 - schema.json
 - shacl.ttl
 - model.ttl
