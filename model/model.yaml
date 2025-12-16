@@ -39,10 +39,14 @@ classes:
                 range: ComponentInventory
                 description: Components discovered during diagnostic
                 multivalued: true
+                annotations:
+                    references: "Jensen et al.; King et al.; CIRPASS"
             component_test_results:
                 range: ComponentTestResults
                 description: Test results for components
                 multivalued: true
+                annotations:
+                    references: "CIRPASS; Battery Pass"
             condition_metrics:
                 range: ConditionMetrics
                 description: Health and condition measurements
@@ -85,6 +89,7 @@ classes:
                 annotations:
                     sql_identifier: diag_event_timestamp
                     owl.filler: prov:generatedAtTime
+                    references: "CIRPASS"
 
             event_timestamp_value:
                 range: string
@@ -107,6 +112,7 @@ classes:
                 annotations:
                     sql_identifier: diag_event_performed_by
                     owl.filler: prov:wasAssociatedWith
+                    references: "Berger et al."
 
             performed_by_value:
                 range: string
@@ -130,6 +136,7 @@ classes:
                 annotations:
                     sql_identifier: diag_event_location
                     owl.filler: geo:location
+                    references: "Jensen et al.; CIRPASS"
                 pattern: "^([0-9]{13}|[A-Z]{2}[A-Z0-9]{3}).*"
 
             location_reference_value:
@@ -238,6 +245,7 @@ classes:
                 annotations:
                     sql_identifier: diag_software_cert
                     owl.filler: schema:certification
+                    references: "King et al."
 
             tool_certification_value:
                 range: string
@@ -264,6 +272,7 @@ classes:
                     sql_identifier: diag_env_temperature
                     owl.filler: qudt:temperature
                     unit: degreeCelsius
+                    references: "Jensen et al."
 
             ambient_temperature_value:
                 range: string
@@ -301,6 +310,7 @@ classes:
                 annotations:
                     sql_identifier: diag_env_location_type
                     owl.filler: prov:atLocation
+                    references: "Jensen et al."
 
             test_environment_value:
                 range: string
@@ -386,6 +396,7 @@ classes:
                     sql_identifier: diag_quality_completeness
                     owl.filler: schema:ratingValue
                     unit: percent
+                    references: "King et al."
                 minimum_value: 0.0
                 maximum_value: 100.0
 
@@ -421,42 +432,56 @@ classes:
         attributes:
             placeholder:
                 range: string
+                annotations:
+                    references: "Jensen et al.; King et al.; CIRPASS"
 
     ComponentTestResults:
         description: Placeholder for component test results
         attributes:
             placeholder:
                 range: string
+                annotations:
+                    references: "CIRPASS; Battery Pass"
 
     ConditionMetrics:
         description: Placeholder for condition metrics
         attributes:
             placeholder:
                 range: string
+                annotations:
+                    references: "Berger et al.; King et al."
 
     DataSanitization:
         description: Placeholder for data sanitization
         attributes:
             placeholder:
                 range: string
+                annotations:
+                    references: "ESPR; CIRPASS"
 
     QualityAssessment:
         description: Placeholder for quality assessment
         attributes:
             placeholder:
                 range: string
+                annotations:
+                    references: "King et al.; CE-RISE Deliverable 1.1"
 
     ServiceActions:
         description: Placeholder for service actions
         attributes:
             placeholder:
                 range: string
+                annotations:
+                    references: "Jensen et al.; CE-RISE Deliverable 1.1"
 
     PredictiveAnalytics:
         description: Placeholder for predictive analytics
         attributes:
             placeholder:
                 range: string
+                annotations:
+                    references: "Berger et al."
 
 # Enumerations
 enums:
