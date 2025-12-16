@@ -1,0 +1,816 @@
+{
+    "$defs": {
+        "ComponentInventory": {
+            "additionalProperties": false,
+            "description": "Placeholder for component inventory",
+            "properties": {
+                "placeholder": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ComponentInventory",
+            "type": "object"
+        },
+        "ComponentTestResults": {
+            "additionalProperties": false,
+            "description": "Placeholder for component test results",
+            "properties": {
+                "placeholder": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ComponentTestResults",
+            "type": "object"
+        },
+        "ConditionMetrics": {
+            "additionalProperties": false,
+            "description": "Placeholder for condition metrics",
+            "properties": {
+                "placeholder": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ConditionMetrics",
+            "type": "object"
+        },
+        "ConfidenceLevelEnum": {
+            "description": "Confidence level in results",
+            "enum": [
+                "HIGH",
+                "MEDIUM",
+                "LOW",
+                "UNKNOWN"
+            ],
+            "title": "ConfidenceLevelEnum",
+            "type": "string"
+        },
+        "DataSanitization": {
+            "additionalProperties": false,
+            "description": "Placeholder for data sanitization",
+            "properties": {
+                "placeholder": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "DataSanitization",
+            "type": "object"
+        },
+        "DiagnosticEvent": {
+            "additionalProperties": false,
+            "description": "Foundation for all diagnostic activities with complete context",
+            "properties": {
+                "asset_reference": {
+                    "description": "Asset management tag for enterprise tracking",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "asset_reference_value": {
+                    "description": "Value holder for asset reference",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "batch_identifier": {
+                    "description": "Batch or lot reference for grouped processing",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "batch_identifier_value": {
+                    "description": "Value holder for batch identifier",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "diagnostic_software": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DiagnosticSoftware"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Software or tool used for diagnostic"
+                },
+                "diagnostic_type": {
+                    "description": "Classification SERVICE SELF_TEST PREDICTIVE CALIBRATION INSPECTION",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "diagnostic_type_value": {
+                    "description": "Value holder for diagnostic type",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "environmental_conditions": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/EnvironmentalConditions"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Environmental parameters during testing"
+                },
+                "event_identifier": {
+                    "description": "Unique identifier for diagnostic event UUID format",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "event_identifier_value": {
+                    "description": "Value holder for event identifier",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "event_timestamp": {
+                    "description": "When diagnostic occurred ISO 8601 with timezone",
+                    "format": "date-time",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "event_timestamp_value": {
+                    "description": "Value holder for event timestamp",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "event_trigger": {
+                    "description": "What initiated diagnostic SCHEDULED FAILURE REQUEST QUALITY_CHECK INTAKE",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "event_trigger_value": {
+                    "description": "Value holder for event trigger",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "location_reference": {
+                    "description": "Where performed facility GLN service center field location",
+                    "pattern": "^([0-9]{13}|[A-Z]{2}[A-Z0-9]{3}).*",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "location_reference_value": {
+                    "description": "Value holder for location reference",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "performed_by": {
+                    "description": "Who or what performed diagnostic - technician ID system ID software",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "performed_by_value": {
+                    "description": "Value holder for performed by",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "product_reference": {
+                    "description": "Link to product-profile identifiers GTIN plus serial",
+                    "pattern": "^([0-9]{14}:[A-Za-z0-9-]+|urn:epc:id:).*",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "product_reference_value": {
+                    "description": "Value holder for product reference",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "quality_metadata": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/QualityMetadata"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Result quality and confidence indicators"
+                },
+                "session_metadata": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SessionMetadata"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Diagnostic session tracking information"
+                },
+                "unit_identifier": {
+                    "description": "Internal tracking ID for specific unit",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "unit_identifier_value": {
+                    "description": "Value holder for unit identifier",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "DiagnosticEvent",
+            "type": "object"
+        },
+        "DiagnosticResults": {
+            "additionalProperties": false,
+            "description": "Root container for all diagnostic results and assessments",
+            "properties": {
+                "component_inventory": {
+                    "description": "Components discovered during diagnostic",
+                    "items": {
+                        "$ref": "#/$defs/ComponentInventory"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "component_test_results": {
+                    "description": "Test results for components",
+                    "items": {
+                        "$ref": "#/$defs/ComponentTestResults"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "condition_metrics": {
+                    "description": "Health and condition measurements",
+                    "items": {
+                        "$ref": "#/$defs/ConditionMetrics"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "data_sanitization": {
+                    "description": "Data erasure and sanitization records",
+                    "items": {
+                        "$ref": "#/$defs/DataSanitization"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "diagnostic_event": {
+                    "description": "Foundation diagnostic event with context",
+                    "items": {
+                        "$ref": "#/$defs/DiagnosticEvent"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "predictive_analytics": {
+                    "description": "Predictive maintenance outputs",
+                    "items": {
+                        "$ref": "#/$defs/PredictiveAnalytics"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "quality_assessment": {
+                    "description": "Quality grading and assessment",
+                    "items": {
+                        "$ref": "#/$defs/QualityAssessment"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "service_actions": {
+                    "description": "Service and repair actions performed",
+                    "items": {
+                        "$ref": "#/$defs/ServiceActions"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "DiagnosticResults",
+            "type": "object"
+        },
+        "DiagnosticSoftware": {
+            "additionalProperties": false,
+            "description": "Information about diagnostic software or tool used",
+            "properties": {
+                "tool_certification": {
+                    "description": "Certification status if validated or certified tool",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tool_certification_value": {
+                    "description": "Value holder for tool certification",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tool_configuration": {
+                    "description": "Configuration settings used during diagnostic",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tool_configuration_value": {
+                    "description": "Value holder for tool configuration",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tool_name": {
+                    "description": "Name of diagnostic software or tool",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tool_name_value": {
+                    "description": "Value holder for tool name",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tool_vendor": {
+                    "description": "Vendor or manufacturer of diagnostic tool",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tool_vendor_value": {
+                    "description": "Value holder for tool vendor",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tool_version": {
+                    "description": "Version of diagnostic software critical for reproducibility",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tool_version_value": {
+                    "description": "Value holder for tool version",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "DiagnosticSoftware",
+            "type": "object"
+        },
+        "DiagnosticTypeEnum": {
+            "description": "Types of diagnostic activities",
+            "enum": [
+                "SERVICE",
+                "SELF_TEST",
+                "PREDICTIVE",
+                "CALIBRATION",
+                "INSPECTION",
+                "REFURBISHMENT"
+            ],
+            "title": "DiagnosticTypeEnum",
+            "type": "string"
+        },
+        "EnvironmentalConditions": {
+            "additionalProperties": false,
+            "description": "Environmental parameters during diagnostic testing",
+            "properties": {
+                "ambient_temperature": {
+                    "description": "Temperature during testing in Celsius",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "ambient_temperature_value": {
+                    "description": "Value holder for ambient temperature",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "humidity": {
+                    "description": "Relative humidity percentage during testing",
+                    "maximum": 100.0,
+                    "minimum": 0.0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "humidity_value": {
+                    "description": "Value holder for humidity",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "other_conditions": {
+                    "description": "Other relevant environmental conditions",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "other_conditions_value": {
+                    "description": "Value holder for other conditions",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "pressure": {
+                    "description": "Atmospheric pressure in kPa",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "pressure_value": {
+                    "description": "Value holder for pressure",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "test_environment": {
+                    "description": "Test environment type LAB FIELD FACTORY CUSTOMER_SITE",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "test_environment_value": {
+                    "description": "Value holder for test environment",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "EnvironmentalConditions",
+            "type": "object"
+        },
+        "EventTriggerEnum": {
+            "description": "What triggered the diagnostic event",
+            "enum": [
+                "SCHEDULED",
+                "FAILURE",
+                "REQUEST",
+                "QUALITY_CHECK",
+                "INTAKE",
+                "ALERT"
+            ],
+            "title": "EventTriggerEnum",
+            "type": "string"
+        },
+        "PredictiveAnalytics": {
+            "additionalProperties": false,
+            "description": "Placeholder for predictive analytics",
+            "properties": {
+                "placeholder": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "PredictiveAnalytics",
+            "type": "object"
+        },
+        "QualityAssessment": {
+            "additionalProperties": false,
+            "description": "Placeholder for quality assessment",
+            "properties": {
+                "placeholder": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "QualityAssessment",
+            "type": "object"
+        },
+        "QualityMetadata": {
+            "additionalProperties": false,
+            "description": "Result quality and confidence indicators",
+            "properties": {
+                "anomalies_detected": {
+                    "description": "Description of any anomalies detected during diagnostic",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "anomalies_detected_value": {
+                    "description": "Value holder for anomalies detected",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "data_completeness": {
+                    "description": "Percentage of tests completed 0 to 100",
+                    "maximum": 100.0,
+                    "minimum": 0.0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "data_completeness_value": {
+                    "description": "Value holder for data completeness",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "result_confidence": {
+                    "description": "Confidence level HIGH MEDIUM LOW",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "result_confidence_value": {
+                    "description": "Value holder for result confidence",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "QualityMetadata",
+            "type": "object"
+        },
+        "ServiceActions": {
+            "additionalProperties": false,
+            "description": "Placeholder for service actions",
+            "properties": {
+                "placeholder": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ServiceActions",
+            "type": "object"
+        },
+        "SessionMetadata": {
+            "additionalProperties": false,
+            "description": "Diagnostic session tracking and completeness",
+            "properties": {
+                "abort_reasons": {
+                    "description": "Reasons for test abortions",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "abort_reasons_value": {
+                    "description": "Value holder for abort reasons",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "session_duration": {
+                    "description": "Total session duration ISO 8601 format",
+                    "pattern": "^P(?:\\d+Y)?(?:\\d+M)?(?:\\d+W)?(?:\\d+D)?(?:T(?:\\d+H)?(?:\\d+M)?(?:\\d+(?:\\.\\d+)?S)?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "session_duration_value": {
+                    "description": "Value holder for session duration",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "test_sequence": {
+                    "description": "Order in which tests were performed",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "test_sequence_value": {
+                    "description": "Value holder for test sequence",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tests_aborted": {
+                    "description": "Number of tests aborted or failed to complete",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "tests_aborted_value": {
+                    "description": "Value holder for tests aborted",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tests_completed": {
+                    "description": "Number of tests successfully completed",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "tests_completed_value": {
+                    "description": "Value holder for tests completed",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SessionMetadata",
+            "type": "object"
+        },
+        "TestEnvironmentEnum": {
+            "description": "Type of test environment",
+            "enum": [
+                "LAB",
+                "FIELD",
+                "FACTORY",
+                "CUSTOMER_SITE",
+                "SERVICE_CENTER",
+                "REMOTE"
+            ],
+            "title": "TestEnvironmentEnum",
+            "type": "string"
+        }
+    },
+    "$id": "https://ce-rise-models.codeberg.page/diagnostic-results/",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "description": "Root container for all diagnostic results and assessments",
+    "metamodel_version": "1.7.0",
+    "properties": {
+        "component_inventory": {
+            "description": "Components discovered during diagnostic",
+            "items": {
+                "$ref": "#/$defs/ComponentInventory"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "component_test_results": {
+            "description": "Test results for components",
+            "items": {
+                "$ref": "#/$defs/ComponentTestResults"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "condition_metrics": {
+            "description": "Health and condition measurements",
+            "items": {
+                "$ref": "#/$defs/ConditionMetrics"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "data_sanitization": {
+            "description": "Data erasure and sanitization records",
+            "items": {
+                "$ref": "#/$defs/DataSanitization"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "diagnostic_event": {
+            "description": "Foundation diagnostic event with context",
+            "items": {
+                "$ref": "#/$defs/DiagnosticEvent"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "predictive_analytics": {
+            "description": "Predictive maintenance outputs",
+            "items": {
+                "$ref": "#/$defs/PredictiveAnalytics"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "quality_assessment": {
+            "description": "Quality grading and assessment",
+            "items": {
+                "$ref": "#/$defs/QualityAssessment"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "service_actions": {
+            "description": "Service and repair actions performed",
+            "items": {
+                "$ref": "#/$defs/ServiceActions"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        }
+    },
+    "title": "diagnostic-results",
+    "type": "object",
+    "version": "0.0.2"
+}
+
