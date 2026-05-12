@@ -1,0 +1,2561 @@
+@prefix diag: <https://ce-rise-models.codeberg.page/diagnostic-results/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema1: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+diag:DiagnosticResults a sh:NodeShape ;
+    rdfs:comment "Root container for all diagnostic results and assessments" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class schema1:Review ;
+            sh:description "Quality grading and assessment" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path diag:quality_assessment ],
+        [ sh:class prov:Activity ;
+            sh:description "Predictive maintenance outputs" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 7 ;
+            sh:path diag:predictive_analytics ],
+        [ sh:class prov:Activity ;
+            sh:description "Service and repair actions performed" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 6 ;
+            sh:path diag:service_actions ],
+        [ sh:class sosa:Observation ;
+            sh:description "Health and condition measurements" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path diag:condition_metrics ],
+        [ sh:class prov:Activity ;
+            sh:description "Data erasure and sanitization records" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path diag:data_sanitization ],
+        [ sh:class ssn:System ;
+            sh:description "Components discovered during diagnostic" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path diag:component_inventory ],
+        [ sh:class diag:DiagnosticEvent ;
+            sh:description "Foundation diagnostic event with context" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path diag:diagnostic_event ],
+        [ sh:class sosa:Observation ;
+            sh:description "Test results for components" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path diag:component_test_results ] ;
+    sh:targetClass diag:DiagnosticResults .
+
+sosa:Result a sh:NodeShape ;
+    rdfs:comment "Measurement result from a diagnostic test or condition assessment" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Textual measured value when the result is qualitative, coded, or non-numeric" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:measured_text_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unit of measurement, preferably using QUDT unit identifiers" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:measured_value_unit ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "Timestamp associated with the measured value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:measured_value_timestamp ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for measured value timestamp" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:measured_value_timestamp_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for measurement method" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:measurement_method_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for measured value name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:measured_value_name_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Name of the measured quantity or diagnostic parameter" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:measured_value_name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for measured numeric value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:measured_numeric_value_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for measured value unit" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:measured_value_unit_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Method, sensor, interface, or procedure used to obtain the measured value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:measurement_method ],
+        [ sh:datatype xsd:float ;
+            sh:description "Numeric measured value when available" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:measured_numeric_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for measured text value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:measured_text_value_value ] ;
+    sh:targetClass sosa:Result .
+
+diag:CalibrationTraceability a sh:NodeShape ;
+    rdfs:comment "Calibration and equipment traceability metadata associated with diagnostic tests" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Value holder for calibration certificate" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:calibration_certificate_value ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to accreditation scope or competence evidence for calibration" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path diag:calibration_accreditation_reference ],
+        [ sh:datatype xsd:date ;
+            sh:description "Date of last calibration" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:last_calibration_date ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for last calibration date" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:last_calibration_date_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for calibration due date" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:calibration_due_date_value ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to calibration certificate or record" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:calibration_certificate ],
+        [ sh:datatype xsd:date ;
+            sh:description "Date when the next calibration is due" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:calibration_due_date ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for calibration equipment identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:calibration_equipment_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for calibration accreditation reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path diag:calibration_accreditation_reference_value ],
+        [ sh:description "Calibration status at the time of test" ;
+            sh:in ( "VALID" "EXPIRED" "NOT_REQUIRED" "NOT_AVAILABLE" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 8 ;
+            sh:path diag:calibration_status ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to calibration standard, reference method, or reference material" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:calibration_standard ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for calibration standard" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:calibration_standard_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Identifier of the test equipment, instrument, sensor, or diagnostic tool" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:calibration_equipment_identifier ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for calibration status" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:calibration_status_value ] ;
+    sh:targetClass diag:CalibrationTraceability .
+
+diag:ComponentHierarchy a sh:NodeShape ;
+    rdfs:comment "Parent-child relationship and assembly position for a component" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Value holder for assembly position" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:assembly_position_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Identifier of the parent component or assembly" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:parent_component_identifier ],
+        [ sh:datatype xsd:string ;
+            sh:description "Physical or logical position in the parent assembly" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:assembly_position ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for hierarchy level" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:hierarchy_level_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component relationship type" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:component_relationship_type_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for parent component identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:parent_component_identifier_value ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Hierarchy level where 0 denotes the root product or top-level assembly" ;
+            sh:maxCount 1 ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:hierarchy_level ],
+        [ sh:description "Type of parent-child relationship" ;
+            sh:in ( "CONTAINS" "PART_OF" "CONNECTED_TO" "CONTROLS" "POWERED_BY" "OTHER" ) ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path diag:component_relationship_type ] ;
+    sh:targetClass diag:ComponentHierarchy .
+
+diag:DataBearingComponent a sh:NodeShape ;
+    rdfs:comment "Component containing storage, memory, or other data-bearing media covered by sanitization" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Type of data-bearing component or storage medium" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:data_component_type ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reference to a component inventory identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:data_component_reference ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for storage medium" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:storage_medium_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Storage medium or technology" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:storage_medium ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for data capacity" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:data_capacity_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unit of data storage capacity" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:data_capacity_unit ],
+        [ sh:datatype xsd:float ;
+            sh:description "Data storage capacity" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:data_capacity ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for data component type" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:data_component_type_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for data capacity unit" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:data_capacity_unit_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for data component reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:data_component_reference_value ] ;
+    sh:targetClass diag:DataBearingComponent .
+
+diag:DegradationIndicators a sh:NodeShape ;
+    rdfs:comment "Degradation and usage indicators used in condition assessment" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "Number of usage or duty cycles observed or estimated" ;
+            sh:maxCount 1 ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:usage_cycles ],
+        [ sh:datatype xsd:float ;
+            sh:description "Rate of degradation in the reported unit or method-specific scale" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:degradation_rate ],
+        [ sh:datatype xsd:float ;
+            sh:description "Performance degradation from 0 to 100 percent" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1e+02 ;
+            sh:minInclusive 0e+00 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:performance_degradation ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for performance degradation" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:performance_degradation_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for operating hours" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:operating_hours_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Total operating hours associated with the component or product" ;
+            sh:maxCount 1 ;
+            sh:minInclusive 0e+00 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:operating_hours ],
+        [ sh:datatype xsd:float ;
+            sh:description "Estimated wear level from 0 to 100 percent" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1e+02 ;
+            sh:minInclusive 0e+00 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:wear_level ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for usage cycles" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:usage_cycles_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for degradation rate" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:degradation_rate_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for wear level" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:wear_level_value ] ;
+    sh:targetClass diag:DegradationIndicators .
+
+diag:DiagnosticEvent a sh:NodeShape ;
+    rdfs:comment "Foundation for all diagnostic activities with complete context" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Value holder for batch identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 17 ;
+            sh:path diag:batch_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for performed by" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:performed_by_value ],
+        [ sh:class diag:EnvironmentalConditions ;
+            sh:description "Environmental parameters during testing" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 21 ;
+            sh:path diag:environmental_conditions ],
+        [ sh:datatype xsd:string ;
+            sh:description "Internal tracking ID for specific unit" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 14 ;
+            sh:path diag:unit_identifier ],
+        [ sh:datatype xsd:string ;
+            sh:description "Where performed facility GLN service center field location" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:location_reference ;
+            sh:pattern "^([0-9]{13}|[A-Z]{2}[A-Z0-9]{3}).*" ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for product reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:product_reference_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for event trigger" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path diag:event_trigger_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for diagnostic type" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:diagnostic_type_value ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "When diagnostic occurred ISO 8601 with timezone" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:event_timestamp ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for asset reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 19 ;
+            sh:path diag:asset_reference_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "What initiated diagnostic SCHEDULED FAILURE REQUEST QUALITY_CHECK INTAKE" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path diag:event_trigger ],
+        [ sh:datatype xsd:string ;
+            sh:description "Asset management tag for enterprise tracking" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 18 ;
+            sh:path diag:asset_reference ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for location reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:location_reference_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier for diagnostic event UUID format" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:event_identifier ;
+            sh:pattern "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" ],
+        [ sh:datatype xsd:string ;
+            sh:description "Who or what performed diagnostic - technician ID system ID software" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:performed_by ],
+        [ sh:class diag:SessionMetadata ;
+            sh:description "Diagnostic session tracking information" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 22 ;
+            sh:path diag:session_metadata ],
+        [ sh:datatype xsd:string ;
+            sh:description "Classification SERVICE SELF_TEST PREDICTIVE CALIBRATION INSPECTION" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:diagnostic_type ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for event timestamp" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:event_timestamp_value ],
+        [ sh:class diag:DiagnosticSoftware ;
+            sh:description "Software or tool used for diagnostic" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 20 ;
+            sh:path diag:diagnostic_software ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for unit identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 15 ;
+            sh:path diag:unit_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Batch or lot reference for grouped processing" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 16 ;
+            sh:path diag:batch_identifier ],
+        [ sh:class diag:QualityMetadata ;
+            sh:description "Result quality and confidence indicators" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 23 ;
+            sh:path diag:quality_metadata ],
+        [ sh:datatype xsd:string ;
+            sh:description "Link to product-profile identifiers GTIN plus serial" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:product_reference ;
+            sh:pattern "^([0-9]{14}:[A-Za-z0-9-]+|urn:epc:id:).*" ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for event identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:event_identifier_value ] ;
+    sh:targetClass diag:DiagnosticEvent .
+
+diag:DiagnosticSoftware a sh:NodeShape ;
+    rdfs:comment "Information about diagnostic software or tool used" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Value holder for tool version" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:tool_version_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for tool certification" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:tool_certification_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Name of diagnostic software or tool" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:tool_name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Configuration settings used during diagnostic" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:tool_configuration ],
+        [ sh:datatype xsd:string ;
+            sh:description "Vendor or manufacturer of diagnostic tool" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:tool_vendor ],
+        [ sh:datatype xsd:string ;
+            sh:description "Certification status if validated or certified tool" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:tool_certification ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for tool vendor" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:tool_vendor_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for tool name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:tool_name_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for tool configuration" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:tool_configuration_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Version of diagnostic software critical for reproducibility" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:tool_version ] ;
+    sh:targetClass diag:DiagnosticSoftware .
+
+diag:EnvironmentalConditions a sh:NodeShape ;
+    rdfs:comment "Environmental parameters during diagnostic testing" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Other relevant environmental conditions" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:other_conditions ],
+        [ sh:datatype xsd:float ;
+            sh:description "Relative humidity percentage during testing" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1e+02 ;
+            sh:minInclusive 0e+00 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:humidity ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for other conditions" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:other_conditions_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test environment" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:test_environment_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Test environment type LAB FIELD FACTORY CUSTOMER_SITE" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:test_environment ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for pressure" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:pressure_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Temperature during testing in Celsius" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:ambient_temperature ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for humidity" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:humidity_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Atmospheric pressure in kPa" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:pressure ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for ambient temperature" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:ambient_temperature_value ] ;
+    sh:targetClass diag:EnvironmentalConditions .
+
+diag:QualityIssue a sh:NodeShape ;
+    rdfs:comment "Quality issue, defect, fault, or nonconformity identified during assessment" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Value holder for recommended resolution" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:recommended_resolution_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for issue identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:issue_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Issue type or defect category" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:issue_type ],
+        [ sh:datatype xsd:string ;
+            sh:description "Identifier for the quality issue" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:issue_identifier ],
+        [ sh:datatype xsd:string ;
+            sh:description "Description of the issue" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:issue_description ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for issue description" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:issue_description_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for affected component reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:affected_component_reference_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for issue type" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:issue_type_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for issue severity" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:issue_severity_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reference to affected component, assembly, or product" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:affected_component_reference ],
+        [ sh:description "Severity of the quality issue" ;
+            sh:in ( "CRITICAL" "HIGH" "MEDIUM" "LOW" "INFORMATIONAL" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path diag:issue_severity ],
+        [ sh:datatype xsd:string ;
+            sh:description "Recommended resolution or mitigation for the issue" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:recommended_resolution ] ;
+    sh:targetClass diag:QualityIssue .
+
+diag:QualityMetadata a sh:NodeShape ;
+    rdfs:comment "Result quality and confidence indicators" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:float ;
+            sh:description "Percentage of tests completed 0 to 100" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1e+02 ;
+            sh:minInclusive 0e+00 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:data_completeness ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for result confidence" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:result_confidence_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for anomalies detected" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:anomalies_detected_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for data completeness" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:data_completeness_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Description of any anomalies detected during diagnostic" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:anomalies_detected ],
+        [ sh:datatype xsd:string ;
+            sh:description "Confidence level HIGH MEDIUM LOW" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:result_confidence ] ;
+    sh:targetClass diag:QualityMetadata .
+
+diag:ReplacedPart a sh:NodeShape ;
+    rdfs:comment "Old and new part information for a replacement performed during service" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Reason for replacement" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:replacement_reason ],
+        [ sh:datatype xsd:string ;
+            sh:description "Serial number of the installed replacement part" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:new_serial_number ],
+        [ sh:datatype xsd:string ;
+            sh:description "Part number of the removed part" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:old_part_number ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for new serial number" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:new_serial_number_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for new part number" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:new_part_number_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for old serial number" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:old_serial_number_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Part number of the installed replacement part" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:new_part_number ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for replacement reason" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:replacement_reason_value ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Quantity of parts replaced" ;
+            sh:maxCount 1 ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:replacement_quantity ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for replacement quantity" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:replacement_quantity_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for old part number" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:old_part_number_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Serial number of the removed part" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:old_serial_number ] ;
+    sh:targetClass diag:ReplacedPart .
+
+diag:RiskFactor a sh:NodeShape ;
+    rdfs:comment "Contributing factor used in a predictive diagnostic or maintenance assessment" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Value holder for risk factor identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:risk_factor_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for risk factor name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:risk_factor_name_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Description of the risk factor" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:risk_factor_description ],
+        [ sh:datatype xsd:string ;
+            sh:description "Identifier for the risk factor" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:risk_factor_identifier ],
+        [ sh:datatype xsd:string ;
+            sh:description "Name of the risk factor" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:risk_factor_name ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to evidence supporting the risk factor" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:risk_factor_evidence_reference ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for risk factor description" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:risk_factor_description_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for risk factor impact level" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:risk_factor_impact_level_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Weight or contribution assigned to the risk factor" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:risk_factor_weight ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for risk factor weight" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:risk_factor_weight_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for risk factor evidence reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:risk_factor_evidence_reference_value ],
+        [ sh:description "Impact level of the risk factor" ;
+            sh:in ( "CRITICAL" "HIGH" "MEDIUM" "LOW" "INFORMATIONAL" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path diag:risk_factor_impact_level ] ;
+    sh:targetClass diag:RiskFactor .
+
+diag:SessionMetadata a sh:NodeShape ;
+    rdfs:comment "Diagnostic session tracking and completeness" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Value holder for tests completed" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:tests_completed_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Total session duration ISO 8601 format" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:session_duration ;
+            sh:pattern "^P(?:\\d+Y)?(?:\\d+M)?(?:\\d+W)?(?:\\d+D)?(?:T(?:\\d+H)?(?:\\d+M)?(?:\\d+(?:\\.\\d+)?S)?)?$" ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Number of tests successfully completed" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:tests_completed ],
+        [ sh:datatype xsd:string ;
+            sh:description "Order in which tests were performed" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:test_sequence ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test sequence" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:test_sequence_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for abort reasons" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:abort_reasons_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for tests aborted" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:tests_aborted_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for session duration" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:session_duration_value ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Number of tests aborted or failed to complete" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:tests_aborted ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reasons for test abortions" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:abort_reasons ] ;
+    sh:targetClass diag:SessionMetadata .
+
+diag:TestComparison a sh:NodeShape ;
+    rdfs:comment "Structured comparison of diagnostic results against references, peers, or specification limits" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Compliance outcome against product, component, or standard specification" ;
+            sh:in ( "COMPLIANT" "NON_COMPLIANT" "PARTIALLY_COMPLIANT" "NOT_APPLICABLE" "NOT_ASSESSED" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path diag:specification_compliance ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for comparison summary" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:comparison_summary_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Comparison against peer population, batch, fleet, or historical records" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:peer_comparison ],
+        [ sh:datatype xsd:string ;
+            sh:description "Baseline used for comparison" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:reference_baseline ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for specification compliance" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:specification_compliance_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for peer comparison" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:peer_comparison_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for reference baseline" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:reference_baseline_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Summary of comparison interpretation" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:comparison_summary ] ;
+    sh:targetClass diag:TestComparison .
+
+diag:TestDeviation a sh:NodeShape ;
+    rdfs:comment "Documented deviation from a planned test method, condition, or acceptance criterion" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Value holder for test deviation severity" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:test_deviation_severity_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test deviation type" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:test_deviation_type_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test deviation description" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:test_deviation_description_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Identifier for the deviation record" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:test_deviation_identifier ],
+        [ sh:datatype xsd:string ;
+            sh:description "Description of the deviation" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:test_deviation_description ],
+        [ sh:description "Severity or impact level of the deviation" ;
+            sh:in ( "CRITICAL" "HIGH" "MEDIUM" "LOW" "INFORMATIONAL" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path diag:test_deviation_severity ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test deviation identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:test_deviation_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type or category of deviation" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:test_deviation_type ] ;
+    sh:targetClass diag:TestDeviation .
+
+schema1:Review a sh:NodeShape ;
+    rdfs:comment "Criterion-level score or result used in a quality assessment",
+        "Quality grading, criteria, issues, and assessment results for product or component condition" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ),
+        ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Value holder for criterion weight" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:criterion_weight_value ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to assessment standard, grading protocol, or work instruction" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 22 ;
+            sh:path diag:assessment_standard ],
+        [ sh:class schema1:Review ;
+            sh:description "Criteria and criterion-level scores used in the assessment" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 14 ;
+            sh:path diag:assessment_criteria ],
+        [ sh:datatype xsd:string ;
+            sh:description "Identifier for the assessment criterion" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:criterion_identifier ],
+        [ sh:datatype xsd:string ;
+            sh:description "Summary of quality checks performed and their outcomes" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 16 ;
+            sh:path diag:quality_check_results ],
+        [ sh:datatype xsd:float ;
+            sh:description "Weight assigned to the criterion during aggregation" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:criterion_weight ],
+        [ sh:datatype xsd:float ;
+            sh:description "Numeric score assigned to the criterion" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:criterion_score ],
+        [ sh:class diag:QualityIssue ;
+            sh:description "Quality issues identified during the assessment" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 15 ;
+            sh:path diag:quality_issues ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for criterion score" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:criterion_score_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for overall grade" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:overall_grade_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for criterion result" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:criterion_result_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for assessment timestamp" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:assessment_timestamp_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for grading scale" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:grading_scale_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for assessment identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:assessment_identifier_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Performance score from 0 to 100 percent" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1e+02 ;
+            sh:minInclusive 0e+00 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path diag:performance_score ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for performance score" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path diag:performance_score_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for quality check results" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 17 ;
+            sh:path diag:quality_check_results_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Functional condition score from 0 to 100 percent" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1e+02 ;
+            sh:minInclusive 0e+00 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:functional_score ],
+        [ sh:datatype xsd:string ;
+            sh:description "Notes supporting the criterion-level assessment" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:criterion_notes ],
+        [ sh:datatype xsd:string ;
+            sh:description "Person, organization, or system that performed the assessment" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 20 ;
+            sh:path diag:assessor_identifier ],
+        [ sh:datatype xsd:string ;
+            sh:description "Criterion name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:criterion_name ],
+        [ sh:description "Scale used for quality grading" ;
+            sh:in ( "LETTER" "NUMERIC" "PERCENTAGE" "PASS_FAIL" "CUSTOM" ) ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path diag:grading_scale ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for assessor identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 21 ;
+            sh:path diag:assessor_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for criterion identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:criterion_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier for the quality assessment" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:assessment_identifier ;
+            sh:pattern "^[A-Za-z0-9._:-]+$" ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "Timestamp when the assessment was performed or recorded" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:assessment_timestamp ],
+        [ sh:datatype xsd:string ;
+            sh:description "Qualitative or coded result for the criterion" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:criterion_result ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for quality certification status" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 19 ;
+            sh:path diag:quality_certification_status_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for criterion notes" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:criterion_notes_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Cosmetic condition score from 0 to 100 percent" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1e+02 ;
+            sh:minInclusive 0e+00 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:cosmetic_score ],
+        [ sh:description "Certification, refurbishment, warranty, or other quality status" ;
+            sh:in ( "CERTIFIED" "REFURBISHED" "WARRANTY" "REJECTED" "CONDITIONAL" "NONE" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 18 ;
+            sh:path diag:quality_certification_status ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for assessment standard" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 23 ;
+            sh:path diag:assessment_standard_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Overall grade assigned by the quality assessment" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:overall_grade ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for criterion name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:criterion_name_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for functional score" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:functional_score_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for cosmetic score" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:cosmetic_score_value ] ;
+    sh:targetClass schema1:Review .
+
+sosa:Observation a sh:NodeShape ;
+    rdfs:comment "Generic component testing outcomes, measurements, standards, comparisons, and calibration references",
+        "Health, degradation, performance, capacity, and remaining-life metrics for components or products" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ),
+        ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Value holder for health score" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 17 ;
+            sh:path diag:health_score_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Method, model, algorithm, or sensor used to generate the metric" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 23 ;
+            sh:path diag:condition_metric_method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test component reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:test_component_reference_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Nominal or expected metric value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path diag:nominal_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test timestamp" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:test_timestamp_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for inconclusive reason" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 30 ;
+            sh:path diag:inconclusive_reason_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for metric type" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:metric_type_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for condition metric method" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 24 ;
+            sh:path diag:condition_metric_method_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Standardized fault, defect, observation, or diagnostic codes" ;
+            sh:nodeKind sh:Literal ;
+            sh:order 22 ;
+            sh:path diag:observation_codes ],
+        [ sh:class diag:CalibrationTraceability ;
+            sh:description "Calibration and equipment traceability supporting the test result" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 31 ;
+            sh:path diag:calibration_traceability ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to the applicable test standard" ;
+            sh:nodeKind sh:Literal ;
+            sh:order 14 ;
+            sh:path diag:test_standard ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test type" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:test_type_value ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "Timestamp when the metric was generated" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 21 ;
+            sh:path diag:condition_metric_timestamp ],
+        [ sh:datatype xsd:float ;
+            sh:description "Current numeric metric value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:current_value ],
+        [ sh:class schema1:PropertyValue ;
+            sh:description "Parameter settings used during test execution" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 20 ;
+            sh:path diag:test_parameters ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reference to the tested component identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:test_component_reference ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to the test protocol or work instruction" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 16 ;
+            sh:path diag:test_protocol_reference ],
+        [ sh:class diag:TestDeviation ;
+            sh:description "Deviations from the planned test protocol" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 21 ;
+            sh:path diag:test_deviations ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier for the component test or test batch" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:test_identifier ;
+            sh:pattern "^[A-Za-z0-9._:-]+$" ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reason why the test could not produce a conclusive result" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 29 ;
+            sh:path diag:inconclusive_reason ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for retest required flag" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 28 ;
+            sh:path diag:retest_required_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Specific test name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:test_name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for metric name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:metric_name_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for estimated remaining life" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 20 ;
+            sh:path diag:estimated_remaining_life_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for condition metric timestamp" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 22 ;
+            sh:path diag:condition_metric_timestamp_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test protocol reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 17 ;
+            sh:path diag:test_protocol_reference_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for compliance standard" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 19 ;
+            sh:path diag:compliance_standard_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Overall health score from 0 to 100 percent" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1e+02 ;
+            sh:minInclusive 0e+00 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 16 ;
+            sh:path diag:health_score ],
+        [ sh:class diag:DegradationIndicators ;
+            sh:description "Structured degradation indicators supporting the condition metric" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 18 ;
+            sh:path diag:degradation_indicators ],
+        [ sh:datatype xsd:string ;
+            sh:description "Name of the condition, health, or degradation metric" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:metric_name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for metric component reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:metric_component_reference_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:test_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Compliance standard or requirement assessed by the test" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 18 ;
+            sh:path diag:compliance_standard ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for nominal value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path diag:nominal_value_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for observation notes" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 25 ;
+            sh:path diag:observation_notes_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for current value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:current_value_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unit of the current value, preferably using QUDT unit identifiers" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:current_value_unit ],
+        [ sh:class sosa:Result ;
+            sh:description "Measured values produced by the test" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 12 ;
+            sh:path diag:measured_values ],
+        [ sh:datatype xsd:string ;
+            sh:description "Estimated remaining useful life in ISO 8601 duration format" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 19 ;
+            sh:path diag:estimated_remaining_life ;
+            sh:pattern "^P(?:\\d+Y)?(?:\\d+M)?(?:\\d+W)?(?:\\d+D)?(?:T(?:\\d+H)?(?:\\d+M)?(?:\\d+(?:\\.\\d+)?S)?)?$" ],
+        [ sh:description "Type of condition metric" ;
+            sh:in ( "HEALTH" "WEAR" "PERFORMANCE" "CAPACITY" "EFFICIENCY" "RELIABILITY" "DEGRADATION" "OTHER" ) ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path diag:metric_type ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "Timestamp when the test was executed or completed" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:test_timestamp ],
+        [ sh:datatype xsd:string ;
+            sh:description "Human-readable notes about observations made during the test" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 24 ;
+            sh:path diag:observation_notes ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test standard" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 15 ;
+            sh:path diag:test_standard_value ],
+        [ sh:description "Test outcome classification" ;
+            sh:in ( "PASS" "FAIL" "WARNING" "NOT_TESTED" "INCONCLUSIVE" "SKIPPED" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 10 ;
+            sh:path diag:test_result ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier for the condition metric record" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:metric_identifier ;
+            sh:pattern "^[A-Za-z0-9._:-]+$" ],
+        [ sh:class schema1:PropertyValue ;
+            sh:description "Expected, nominal, threshold, or baseline values used for interpretation" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 13 ;
+            sh:path diag:reference_values ],
+        [ sh:class diag:TestComparison ;
+            sh:description "Comparison of the result against baselines, peers, or specifications" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 26 ;
+            sh:path diag:test_comparison ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Whether the test result requires another test run" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 27 ;
+            sh:path diag:retest_required ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for current value unit" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:current_value_unit_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for nominal value unit" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 15 ;
+            sh:path diag:nominal_value_unit_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unit of the nominal value, preferably using QUDT unit identifiers" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 14 ;
+            sh:path diag:nominal_value_unit ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reference to the component or product being assessed" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:metric_component_reference ],
+        [ sh:description "Type of test performed" ;
+            sh:in ( "FUNCTIONAL" "PERFORMANCE" "SAFETY" "COMPLIANCE" "STRESS" "CALIBRATION" "DIAGNOSTIC" "SELF_TEST" "INSPECTION" "OTHER" ) ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path diag:test_type ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for observation codes" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 23 ;
+            sh:path diag:observation_codes_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:test_name_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for metric identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:metric_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test result" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:test_result_value ] ;
+    sh:targetClass sosa:Observation .
+
+ssn:System a sh:NodeShape ;
+    rdfs:comment "Components, sub-components, and configuration items discovered or documented during a diagnostic event" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class schema1:PropertyValue ;
+            sh:description "Flexible key-value specifications associated with this component" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 22 ;
+            sh:path diag:component_specifications ],
+        [ sh:description "Functional type of component" ;
+            sh:in ( "PROCESSOR" "MEMORY" "STORAGE" "SENSOR" "ACTUATOR" "MODULE" "ASSEMBLY" "POWER" "COMMUNICATION" "DISPLAY" "CONNECTOR" "OTHER" ) ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path diag:component_type ],
+        [ sh:description "Presence and operational status detected during diagnostics" ;
+            sh:in ( "PRESENT" "ABSENT" "OPERATIONAL" "DEGRADED" "FAULTY" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 20 ;
+            sh:path diag:component_status ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier for the discovered component or configuration item" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:component_identifier ;
+            sh:pattern "^[A-Za-z0-9._:-]+$" ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component discovery method" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 26 ;
+            sh:path diag:component_discovery_method_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Firmware version when applicable" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 18 ;
+            sh:path diag:component_firmware_version ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component status" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 21 ;
+            sh:path diag:component_status_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Component model designation" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:component_model ],
+        [ sh:class diag:ComponentHierarchy ;
+            sh:description "Parent-child placement of this component in the product or assembly hierarchy" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 23 ;
+            sh:path diag:component_hierarchy ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:component_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component manufacturer" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:component_manufacturer_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Component serial number" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 14 ;
+            sh:path diag:component_serial_number ],
+        [ sh:datatype xsd:string ;
+            sh:description "Manufacturer or operator part number" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path diag:component_part_number ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "Timestamp when the component was discovered or recorded" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 27 ;
+            sh:path diag:component_discovery_timestamp ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component version or revision" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 17 ;
+            sh:path diag:component_version_revision_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:component_name_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Hardware, software, firmware, or configuration revision" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 16 ;
+            sh:path diag:component_version_revision ],
+        [ sh:datatype xsd:string ;
+            sh:description "Human-readable component name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:component_name ],
+        [ sh:description "Higher-level component category" ;
+            sh:in ( "HARDWARE" "SOFTWARE" "FIRMWARE" "MECHANICAL" "ELECTRICAL" "ELECTRONIC" "OPTICAL" "HYDRAULIC" "PNEUMATIC" "OTHER" ) ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path diag:component_category ],
+        [ sh:datatype xsd:string ;
+            sh:description "Method, interface, or procedure used to discover the component" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 25 ;
+            sh:path diag:component_discovery_method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Component manufacturer name or organization identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:component_manufacturer ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component category" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:component_category_value ],
+        [ sh:class ssn:System ;
+            sh:description "Nested sub-components discovered below this component" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 24 ;
+            sh:path diag:sub_components ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component serial number" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 15 ;
+            sh:path diag:component_serial_number_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component discovery timestamp" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 28 ;
+            sh:path diag:component_discovery_timestamp_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component firmware version" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 19 ;
+            sh:path diag:component_firmware_version_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component part number" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path diag:component_part_number_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component type" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:component_type_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component model" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:component_model_value ] ;
+    sh:targetClass ssn:System .
+
+schema1:PropertyValue a sh:NodeShape ;
+    rdfs:comment "Expected, nominal, threshold, or baseline value used to interpret a measured value",
+        "Name-value component specification with optional unit and source reference",
+        "Parameter setting used during a diagnostic or performance test" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ),
+        ( rdf:type ),
+        ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:float ;
+            sh:description "Upper tolerance or acceptance bound" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:tolerance_upper ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component specification value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:component_specification_value_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for lower tolerance" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:tolerance_lower_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Numeric reference value when available" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:reference_numeric_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test parameter name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:test_parameter_name_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Name of the specification parameter" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:component_specification_name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Name of the test parameter" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:test_parameter_name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component specification source" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:component_specification_source_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unit of the reference value, preferably using QUDT unit identifiers" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:reference_value_unit ],
+        [ sh:datatype xsd:string ;
+            sh:description "Textual reference value or expected state" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:reference_text_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unit of the test parameter value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:test_parameter_unit ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for reference text value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:reference_text_value_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Name of the reference quantity or criterion" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:reference_value_name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test parameter unit" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:test_parameter_unit_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for upper tolerance" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:tolerance_upper_value ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to the source specification, datasheet, standard, or diagnostic report" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:component_specification_source ],
+        [ sh:datatype xsd:string ;
+            sh:description "Specification value as reported by the diagnostic source" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:component_specification_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Test parameter value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:test_parameter_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for test parameter value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:test_parameter_value_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for reference value name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:reference_value_name_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component specification name" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:component_specification_name_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for reference value source" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path diag:reference_value_source_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for component specification unit" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:component_specification_unit_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unit of measurement for the specification value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:component_specification_unit ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for reference numeric value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:reference_numeric_value_value ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to the specification, standard, baseline, or data source defining the reference value" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path diag:reference_value_source ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for reference value unit" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:reference_value_unit_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Lower tolerance or acceptance bound" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:tolerance_lower ] ;
+    sh:targetClass schema1:PropertyValue .
+
+prov:Activity a sh:NodeShape ;
+    rdfs:comment "Predictive maintenance, failure risk, remaining-life, and recommended-action outputs",
+        "Secure erasure, verification, and certification records for data-bearing components",
+        "Service, repair, replacement, adjustment, calibration, cleaning, update, or configuration actions performed" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ),
+        ( rdf:type ),
+        ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Value holder for action result" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 16 ;
+            sh:path diag:action_result_value ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to model inputs, feature set, training metadata, or diagnostic evidence" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 29 ;
+            sh:path diag:model_input_reference ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for service documentation" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 24 ;
+            sh:path diag:service_documentation_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Description of required follow-up actions" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 19 ;
+            sh:path diag:follow_up_description ],
+        [ sh:class diag:DataBearingComponent ;
+            sh:description "Data-bearing components covered by the sanitization activity" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path diag:data_bearing_components ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for cost estimate" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 25 ;
+            sh:path diag:cost_estimate_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for sanitization identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:sanitization_identifier_value ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to sanitization certificate or evidence" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 17 ;
+            sh:path diag:sanitization_certificate_reference ],
+        [ sh:description "Type of service action performed" ;
+            sh:in ( "REPAIR" "REPLACE" "ADJUST" "CALIBRATE" "CLEAN" "UPDATE" "CONFIGURE" "INSPECT" "OTHER" ) ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path diag:action_type ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for action duration" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:action_duration_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Service action duration in ISO 8601 duration format" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:action_duration ;
+            sh:pattern "^P(?:\\d+Y)?(?:\\d+M)?(?:\\d+W)?(?:\\d+D)?(?:T(?:\\d+H)?(?:\\d+M)?(?:\\d+(?:\\.\\d+)?S)?)?$" ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for action identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:action_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for prediction model" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 17 ;
+            sh:path diag:prediction_model_value ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Whether a sanitization certificate was issued" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 15 ;
+            sh:path diag:certificate_issued ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for verification method" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 14 ;
+            sh:path diag:verification_method_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for sanitization method" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:sanitization_method_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier for the prediction record" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:prediction_identifier ;
+            sh:pattern "^[A-Za-z0-9._:-]+$" ],
+        [ sh:datatype xsd:string ;
+            sh:description "Technician, organization, or system that performed the service action" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path diag:service_performed_by ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for prediction model version" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 19 ;
+            sh:path diag:prediction_model_version_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for compliance certification" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 22 ;
+            sh:path diag:compliance_certification_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for action type" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:action_type_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Version of the predictive model or algorithm" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 18 ;
+            sh:path diag:prediction_model_version ],
+        [ sh:description "Type of prediction generated" ;
+            sh:in ( "FAILURE_RISK" "MAINTENANCE_DUE" "PERFORMANCE_DEGRADATION" "END_OF_LIFE" "REMAINING_USEFUL_LIFE" "OTHER" ) ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path diag:prediction_type ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI references to service reports, images, work orders, or supporting evidence" ;
+            sh:nodeKind sh:Literal ;
+            sh:order 23 ;
+            sh:path diag:service_documentation ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for recommended maintenance" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 21 ;
+            sh:path diag:recommended_maintenance_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for follow-up required flag" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 18 ;
+            sh:path diag:follow_up_required_value ],
+        [ sh:description "Outcome of the service action" ;
+            sh:in ( "SUCCESS" "FAILED" "PARTIAL" "PENDING" "NOT_APPLICABLE" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 15 ;
+            sh:path diag:action_result ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for service performed by" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path diag:service_performed_by_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Method used to verify the sanitization outcome" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path diag:verification_method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for prediction timestamp" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path diag:prediction_timestamp_value ],
+        [ sh:datatype xsd:float ;
+            sh:description "Statistical confidence in the prediction from 0 to 100 percent" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1e+02 ;
+            sh:minInclusive 0e+00 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path diag:prediction_confidence_level ],
+        [ sh:description "Result of the sanitization activity" ;
+            sh:in ( "SUCCESS" "FAILED" "PARTIAL" "VERIFIED" "NOT_VERIFIED" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 7 ;
+            sh:path diag:sanitization_result ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for prediction type" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:prediction_type_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for prediction component reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:prediction_component_reference_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for data classification" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 20 ;
+            sh:path diag:data_classification_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for urgency level" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 23 ;
+            sh:path diag:urgency_level_value ],
+        [ sh:class diag:RiskFactor ;
+            sh:description "Risk factors contributing to the prediction" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 28 ;
+            sh:path diag:risk_factors ],
+        [ sh:description "Standard or policy followed for sanitization" ;
+            sh:in ( "NIST_800_88" "DOD_5220" "GDPR" "ISO_27001" "ISO_27040" "ORGANIZATION_POLICY" "OTHER" ) ;
+            sh:maxCount 1 ;
+            sh:order 5 ;
+            sh:path diag:sanitization_standard ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for service component reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path diag:service_component_reference_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for sanitization performed by" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path diag:sanitization_performed_by_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for time to failure" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:time_to_failure_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for failure probability" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:failure_probability_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Time horizon over which the prediction applies in ISO 8601 duration format" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 26 ;
+            sh:path diag:prediction_horizon ;
+            sh:pattern "^P(?:\\d+Y)?(?:\\d+M)?(?:\\d+W)?(?:\\d+D)?(?:T(?:\\d+H)?(?:\\d+M)?(?:\\d+(?:\\.\\d+)?S)?)?$" ],
+        [ sh:class diag:ReplacedPart ;
+            sh:description "Parts replaced during the service action" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 14 ;
+            sh:path diag:parts_replaced ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for certificate issued flag" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 16 ;
+            sh:path diag:certificate_issued_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Estimated cost or economic impact of recommended action or failure scenario" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 24 ;
+            sh:path diag:cost_estimate ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "Timestamp when the service action was performed or completed" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:action_timestamp ],
+        [ sh:datatype xsd:string ;
+            sh:description "Technician, organization, or automated system that performed sanitization" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path diag:sanitization_performed_by ],
+        [ sh:description "Classification of data handled before sanitization" ;
+            sh:in ( "PUBLIC" "INTERNAL" "CONFIDENTIAL" "SECRET" "PERSONAL_DATA" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 19 ;
+            sh:path diag:data_classification ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for sanitization result" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:sanitization_result_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Technician notes, observations, or service comments" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 21 ;
+            sh:path diag:technician_notes ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for technician notes" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 22 ;
+            sh:path diag:technician_notes_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for prediction confidence level" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path diag:prediction_confidence_level_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for action description" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path diag:action_description_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for prediction confidence class" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 15 ;
+            sh:path diag:prediction_confidence_class_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for action timestamp" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:action_timestamp_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Recommended maintenance or preventive action" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 20 ;
+            sh:path diag:recommended_maintenance ],
+        [ sh:description "Sanitization method applied" ;
+            sh:in ( "OVERWRITE" "SECURE_ERASE" "DEGAUSS" "PHYSICAL_DESTRUCTION" "CRYPTO_ERASE" "FACTORY_RESET" "OTHER" ) ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path diag:sanitization_method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier for the service action" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:action_identifier ;
+            sh:pattern "^[A-Za-z0-9._:-]+$" ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for sanitization certificate reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 18 ;
+            sh:path diag:sanitization_certificate_reference_value ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "URI reference to compliance certification or audit evidence" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 21 ;
+            sh:path diag:compliance_certification ],
+        [ sh:description "Urgency level for maintenance or intervention" ;
+            sh:in ( "IMMEDIATE" "HIGH" "MEDIUM" "LOW" "SCHEDULED" "NONE" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 22 ;
+            sh:path diag:urgency_level ],
+        [ sh:datatype xsd:string ;
+            sh:description "Estimated time to failure in ISO 8601 duration format" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:time_to_failure ;
+            sh:pattern "^P(?:\\d+Y)?(?:\\d+M)?(?:\\d+W)?(?:\\d+D)?(?:T(?:\\d+H)?(?:\\d+M)?(?:\\d+(?:\\.\\d+)?S)?)?$" ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for sanitization standard" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:sanitization_standard_value ],
+        [ sh:description "Qualitative confidence class for the prediction" ;
+            sh:in ( "HIGH" "MEDIUM" "LOW" "UNKNOWN" ) ;
+            sh:maxCount 1 ;
+            sh:order 14 ;
+            sh:path diag:prediction_confidence_class ],
+        [ sh:datatype xsd:string ;
+            sh:description "Model, algorithm, or analytical method used for prediction" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 16 ;
+            sh:path diag:prediction_model ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reference to the component or product affected by the service action" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path diag:service_component_reference ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "Timestamp when the prediction was generated" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path diag:prediction_timestamp ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Whether follow-up service, inspection, or diagnostic work is required" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 17 ;
+            sh:path diag:follow_up_required ],
+        [ sh:datatype xsd:string ;
+            sh:description "Reference to the component or product being predicted" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:prediction_component_reference ],
+        [ sh:datatype xsd:float ;
+            sh:description "Probability of failure from 0 to 100 percent" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1e+02 ;
+            sh:minInclusive 0e+00 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path diag:failure_probability ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "Timestamp when sanitization was completed or recorded" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path diag:sanitization_timestamp ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for prediction identifier" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path diag:prediction_identifier_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Description of the service or repair action" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path diag:action_description ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for prediction horizon" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 27 ;
+            sh:path diag:prediction_horizon_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for model input reference" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 30 ;
+            sh:path diag:model_input_reference_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for sanitization timestamp" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path diag:sanitization_timestamp_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Value holder for follow-up description" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 20 ;
+            sh:path diag:follow_up_description_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Unique identifier for the sanitization activity" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path diag:sanitization_identifier ;
+            sh:pattern "^[A-Za-z0-9._:-]+$" ] ;
+    sh:targetClass prov:Activity .
+
+
