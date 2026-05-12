@@ -3,7 +3,7 @@ name: diagnostic-results
 title: Diagnostic Results Data Model
 description: Structured outputs from diagnostic, repair, service, and condition-assessment operations
 license: https://creativecommons.org/licenses/by-nc/4.0/
-version: 0.0.4
+version: 0.1.0
 
 prefixes:
     linkml: https://w3id.org/linkml/
@@ -19,9 +19,15 @@ prefixes:
     org: http://www.w3.org/ns/org#
     vcard: http://www.w3.org/2006/vcard/ns#
     geo: http://www.w3.org/2003/01/geo/wgs84_pos#
+    uq: https://ce-rise-models.codeberg.page/uncertainty-quantification/
+    mt: https://ce-rise-models.codeberg.page/metrological-traceability/
+    dqf: https://ce-rise-models.codeberg.page/data-quality-framework/
 
 imports:
     - linkml:types
+    - https://codeberg.org/CE-RISE-models/uncertainty-quantification/raw/tag/pages-v0.0.3/generated/schema
+    - https://codeberg.org/CE-RISE-models/metrological-traceability/raw/tag/pages-v0.0.3/generated/schema
+    - https://codeberg.org/CE-RISE-models/data-quality-framework/raw/tag/pages-v0.0.3/generated/schema
 
 default_range: string
 
@@ -444,7 +450,7 @@ classes:
                 description: Value holder for component identifier
 
             component_type:
-                range: ComponentTypeEnum
+                range: DiagnosticComponentTypeEnum
                 description: Functional type of component
                 annotations:
                     sql_identifier: diag_component_type
@@ -455,7 +461,7 @@ classes:
                 description: Value holder for component type
 
             component_category:
-                range: ComponentCategoryEnum
+                range: DiagnosticComponentCategoryEnum
                 description: Higher-level component category
                 annotations:
                     sql_identifier: diag_component_category
@@ -543,7 +549,7 @@ classes:
                 description: Value holder for component firmware version
 
             component_status:
-                range: ComponentStatusEnum
+                range: DiagnosticComponentStatusEnum
                 description: Presence and operational status detected during diagnostics
                 annotations:
                     sql_identifier: diag_component_status
@@ -680,7 +686,7 @@ classes:
                 description: Value holder for assembly position
 
             component_relationship_type:
-                range: ComponentRelationshipEnum
+                range: DiagnosticComponentRelationshipEnum
                 description: Type of parent-child relationship
                 annotations:
                     sql_identifier: diag_component_relationship_type
@@ -730,7 +736,7 @@ classes:
                 description: Value holder for test component reference
 
             test_type:
-                range: TestTypeEnum
+                range: DiagnosticTestTypeEnum
                 description: Type of test performed
                 annotations:
                     sql_identifier: diag_test_type
@@ -752,7 +758,7 @@ classes:
                 description: Value holder for test name
 
             test_result:
-                range: TestResultEnum
+                range: DiagnosticTestResultEnum
                 description: Test outcome classification
                 annotations:
                     sql_identifier: diag_test_result
@@ -880,6 +886,39 @@ classes:
                 description: Calibration and equipment traceability supporting the test result
                 inlined: true
 
+            component_test_uncertainty_statements:
+                range: UncertaintyStatement
+                description: Optional uncertainty statements for component test results, measured values, thresholds, or test interpretations
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: uq:uncertaintyStatement
+                    sql_identifier: diag_test_uncertainty_statements
+
+            component_test_metrological_traceability_statements:
+                range: TraceabilityStatement
+                description: Optional metrological traceability statements for component tests, methods, instruments, standards, calibrations, or reference materials
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: mt:traceabilityStatement
+                    sql_identifier: diag_test_metrological_traceability
+
+            component_test_data_quality_assessments:
+                range: DataQualityAssessment
+                description: Optional data quality assessments for component test data, evidence, provenance, completeness, or representativeness
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: diag_test_data_quality_assessments
+
     MeasuredValue:
         description: Measurement result from a diagnostic test or condition assessment
         class_uri: sosa:Result
@@ -950,6 +989,28 @@ classes:
                 range: string
                 description: Value holder for measurement method
 
+            measured_value_uncertainty_statements:
+                range: UncertaintyStatement
+                description: Optional uncertainty statements for the measured value
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: uq:uncertaintyStatement
+                    sql_identifier: diag_measured_value_uncertainty
+
+            measured_value_metrological_traceability_statements:
+                range: TraceabilityStatement
+                description: Optional metrological traceability statements for the measured value, measurement method, instrument, calibration, or reference material
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: mt:traceabilityStatement
+                    sql_identifier: diag_measured_value_metrological_traceability
+
     ConditionMetrics:
         description: Health, degradation, performance, capacity, and remaining-life metrics for components or products
         class_uri: sosa:Observation
@@ -979,7 +1040,7 @@ classes:
                 description: Value holder for metric component reference
 
             metric_type:
-                range: MetricTypeEnum
+                range: DiagnosticMetricTypeEnum
                 description: Type of condition metric
                 annotations:
                     sql_identifier: diag_condition_metric_type
@@ -1097,6 +1158,39 @@ classes:
                 range: string
                 description: Value holder for condition metric method
 
+            condition_metric_uncertainty_statements:
+                range: UncertaintyStatement
+                description: Optional uncertainty statements for condition metrics, health scores, degradation indicators, or remaining-life estimates
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: uq:uncertaintyStatement
+                    sql_identifier: diag_condition_uncertainty_statements
+
+            condition_metric_metrological_traceability_statements:
+                range: TraceabilityStatement
+                description: Optional metrological traceability statements for condition measurements, methods, sensors, standards, calibrations, or reference materials
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: mt:traceabilityStatement
+                    sql_identifier: diag_condition_metrological_traceability
+
+            condition_metric_data_quality_assessments:
+                range: DataQualityAssessment
+                description: Optional data quality assessments for condition metric data, evidence, provenance, completeness, or representativeness
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: diag_condition_data_quality_assessments
+
     DataSanitization:
         description: Secure erasure, verification, and certification records for data-bearing components
         class_uri: prov:Activity
@@ -1122,7 +1216,7 @@ classes:
                 inlined_as_list: true
 
             sanitization_method:
-                range: SanitizationMethodEnum
+                range: DiagnosticSanitizationMethodEnum
                 description: Sanitization method applied
                 annotations:
                     sql_identifier: diag_sanitization_method
@@ -1133,7 +1227,7 @@ classes:
                 description: Value holder for sanitization method
 
             sanitization_standard:
-                range: SanitizationStandardEnum
+                range: DiagnosticSanitizationStandardEnum
                 description: Standard or policy followed for sanitization
                 annotations:
                     sql_identifier: diag_sanitization_standard
@@ -1144,7 +1238,7 @@ classes:
                 description: Value holder for sanitization standard
 
             sanitization_result:
-                range: SanitizationResultEnum
+                range: DiagnosticSanitizationResultEnum
                 description: Result of the sanitization activity
                 annotations:
                     sql_identifier: diag_sanitization_result
@@ -1210,7 +1304,7 @@ classes:
                 description: Value holder for sanitization certificate reference
 
             data_classification:
-                range: DataClassificationEnum
+                range: DiagnosticDataClassificationEnum
                 description: Classification of data handled before sanitization
                 annotations:
                     sql_identifier: diag_sanitization_data_classification
@@ -1230,6 +1324,17 @@ classes:
             compliance_certification_value:
                 range: string
                 description: Value holder for compliance certification
+
+            sanitization_data_quality_assessments:
+                range: DataQualityAssessment
+                description: Optional data quality assessments for sanitization records, verification evidence, certificates, provenance, completeness, or representativeness
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: diag_sanitization_data_quality_assessments
 
     QualityAssessment:
         description: Quality grading, criteria, issues, and assessment results for product or component condition
@@ -1271,7 +1376,7 @@ classes:
                 description: Value holder for overall grade
 
             grading_scale:
-                range: GradingScaleEnum
+                range: DiagnosticGradingScaleEnum
                 description: Scale used for quality grading
                 annotations:
                     sql_identifier: diag_assessment_grading_scale
@@ -1331,7 +1436,7 @@ classes:
                 inlined_as_list: true
 
             quality_issues:
-                range: QualityIssue
+                range: DiagnosticQualityIssue
                 description: Quality issues identified during the assessment
                 multivalued: true
                 inlined: true
@@ -1349,7 +1454,7 @@ classes:
                 description: Value holder for quality check results
 
             quality_certification_status:
-                range: QualityCertificationStatusEnum
+                range: DiagnosticQualityCertificationStatusEnum
                 description: Certification, refurbishment, warranty, or other quality status
                 annotations:
                     sql_identifier: diag_assessment_cert_status
@@ -1381,6 +1486,28 @@ classes:
                 range: string
                 description: Value holder for assessment standard
 
+            quality_assessment_uncertainty_statements:
+                range: UncertaintyStatement
+                description: Optional uncertainty statements for quality scores, grades, assessment criteria, or derived assessment results
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: uq:uncertaintyStatement
+                    sql_identifier: diag_assessment_uncertainty_statements
+
+            quality_assessment_data_quality_assessments:
+                range: DataQualityAssessment
+                description: Optional data quality assessments for quality assessment data, evidence, provenance, completeness, or representativeness
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: diag_assessment_data_quality_assessments
+
     ServiceActions:
         description: Service, repair, replacement, adjustment, calibration, cleaning, update, or configuration actions performed
         class_uri: prov:Activity
@@ -1399,7 +1526,7 @@ classes:
                 description: Value holder for action identifier
 
             action_type:
-                range: ServiceActionTypeEnum
+                range: DiagnosticServiceActionTypeEnum
                 description: Type of service action performed
                 annotations:
                     sql_identifier: diag_service_action_type
@@ -1473,7 +1600,7 @@ classes:
                 inlined_as_list: true
 
             action_result:
-                range: ActionResultEnum
+                range: DiagnosticActionResultEnum
                 description: Outcome of the service action
                 annotations:
                     sql_identifier: diag_service_action_result
@@ -1528,6 +1655,17 @@ classes:
                 range: string
                 description: Value holder for service documentation
 
+            service_action_data_quality_assessments:
+                range: DataQualityAssessment
+                description: Optional data quality assessments for service action records, documentation, evidence, provenance, completeness, or representativeness
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: diag_service_data_quality_assessments
+
     PredictiveAnalytics:
         description: Predictive maintenance, failure risk, remaining-life, and recommended-action outputs
         class_uri: prov:Activity
@@ -1568,7 +1706,7 @@ classes:
                 description: Value holder for prediction component reference
 
             prediction_type:
-                range: PredictionTypeEnum
+                range: DiagnosticPredictionTypeEnum
                 description: Type of prediction generated
                 annotations:
                     sql_identifier: diag_predict_type
@@ -1619,7 +1757,7 @@ classes:
                 description: Value holder for prediction confidence level
 
             prediction_confidence_class:
-                range: ConfidenceLevelEnum
+                range: DiagnosticConfidenceLevelEnum
                 description: Qualitative confidence class for the prediction
                 annotations:
                     sql_identifier: diag_predict_confidence_class
@@ -1663,7 +1801,7 @@ classes:
                 description: Value holder for recommended maintenance
 
             urgency_level:
-                range: MaintenanceUrgencyEnum
+                range: DiagnosticMaintenanceUrgencyEnum
                 description: Urgency level for maintenance or intervention
                 annotations:
                     sql_identifier: diag_predict_urgency_level
@@ -1713,6 +1851,28 @@ classes:
             model_input_reference_value:
                 range: string
                 description: Value holder for model input reference
+
+            predictive_analytics_uncertainty_statements:
+                range: UncertaintyStatement
+                description: Optional uncertainty statements for failure probabilities, confidence levels, time-to-failure estimates, prediction horizons, cost estimates, or other predictive outputs
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: uq:uncertaintyStatement
+                    sql_identifier: diag_predict_uncertainty_statements
+
+            predictive_analytics_data_quality_assessments:
+                range: DataQualityAssessment
+                description: Optional data quality assessments for predictive model inputs, outputs, evidence, provenance, completeness, or representativeness
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: diag_predict_data_quality_assessments
 
     ReferenceValue:
         description: Expected, nominal, threshold, or baseline value used to interpret a measured value
@@ -1795,6 +1955,28 @@ classes:
                 range: string
                 description: Value holder for reference value source
 
+            reference_value_metrological_traceability_statements:
+                range: TraceabilityStatement
+                description: Optional metrological traceability statements for reference values, thresholds, baselines, standards, specifications, or reference materials
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: mt:traceabilityStatement
+                    sql_identifier: diag_reference_value_metrological_traceability
+
+            reference_value_data_quality_assessments:
+                range: DataQualityAssessment
+                description: Optional data quality assessments for reference values, sources, provenance, completeness, or representativeness
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: diag_reference_value_data_quality
+
     TestParameter:
         description: Parameter setting used during a diagnostic or performance test
         class_uri: schema:PropertyValue
@@ -1869,7 +2051,7 @@ classes:
                 description: Value holder for test deviation description
 
             test_deviation_severity:
-                range: SeverityLevelEnum
+                range: DiagnosticSeverityLevelEnum
                 description: Severity or impact level of the deviation
                 annotations:
                     sql_identifier: diag_test_deviation_severity
@@ -1905,7 +2087,7 @@ classes:
                 description: Value holder for peer comparison
 
             specification_compliance:
-                range: ComplianceStatusEnum
+                range: DiagnosticComplianceStatusEnum
                 description: Compliance outcome against product, component, or standard specification
                 annotations:
                     sql_identifier: diag_test_spec_compliance
@@ -1974,7 +2156,7 @@ classes:
                 description: Value holder for calibration certificate
 
             calibration_status:
-                range: CalibrationStatusEnum
+                range: DiagnosticCalibrationStatusEnum
                 description: Calibration status at the time of test
                 annotations:
                     sql_identifier: diag_calib_status
@@ -2005,6 +2187,28 @@ classes:
             calibration_accreditation_reference_value:
                 range: string
                 description: Value holder for calibration accreditation reference
+
+            calibration_metrological_traceability_statements:
+                range: TraceabilityStatement
+                description: Optional metrological traceability statements for calibration equipment, calibration certificates, standards, reference materials, accreditation, or calibration chains
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: mt:traceabilityStatement
+                    sql_identifier: diag_calib_metrological_traceability
+
+            calibration_data_quality_assessments:
+                range: DataQualityAssessment
+                description: Optional data quality assessments for calibration records, certificates, accreditation evidence, provenance, completeness, or representativeness
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    owl.filler: dqf:dataQualityAssessment
+                    sql_identifier: diag_calib_data_quality_assessments
 
     DegradationIndicators:
         description: Degradation and usage indicators used in condition assessment
@@ -2201,7 +2405,7 @@ classes:
                 range: string
                 description: Value holder for criterion notes
 
-    QualityIssue:
+    DiagnosticQualityIssue:
         description: Quality issue, defect, fault, or nonconformity identified during assessment
         attributes:
             issue_identifier:
@@ -2227,7 +2431,7 @@ classes:
                 description: Value holder for issue type
 
             issue_severity:
-                range: SeverityLevelEnum
+                range: DiagnosticSeverityLevelEnum
                 description: Severity of the quality issue
                 annotations:
                     sql_identifier: diag_quality_issue_severity
@@ -2377,7 +2581,7 @@ classes:
                 description: Value holder for risk factor description
 
             risk_factor_impact_level:
-                range: SeverityLevelEnum
+                range: DiagnosticSeverityLevelEnum
                 description: Impact level of the risk factor
                 annotations:
                     sql_identifier: diag_risk_factor_impact_level
@@ -2411,7 +2615,7 @@ classes:
 
 # Enumerations
 enums:
-    DiagnosticTypeEnum:
+    DiagnosticEventTypeEnum:
         description: Types of diagnostic activities
         permissible_values:
             SERVICE:
@@ -2427,7 +2631,7 @@ enums:
             REFURBISHMENT:
                 description: Refurbishment assessment
 
-    EventTriggerEnum:
+    DiagnosticEventTriggerEnum:
         description: What triggered the diagnostic event
         permissible_values:
             SCHEDULED:
@@ -2443,7 +2647,7 @@ enums:
             ALERT:
                 description: Triggered by alert or threshold
 
-    TestEnvironmentEnum:
+    DiagnosticTestEnvironmentEnum:
         description: Type of test environment
         permissible_values:
             LAB:
@@ -2459,7 +2663,7 @@ enums:
             REMOTE:
                 description: Remote diagnostic
 
-    ConfidenceLevelEnum:
+    DiagnosticConfidenceLevelEnum:
         description: Confidence level in results
         permissible_values:
             HIGH:
@@ -2471,7 +2675,7 @@ enums:
             UNKNOWN:
                 description: Confidence level unknown
 
-    ComponentTypeEnum:
+    DiagnosticComponentTypeEnum:
         description: Functional component types commonly discovered during diagnostics
         permissible_values:
             PROCESSOR:
@@ -2499,7 +2703,7 @@ enums:
             OTHER:
                 description: Other component type
 
-    ComponentCategoryEnum:
+    DiagnosticComponentCategoryEnum:
         description: High-level component categories
         permissible_values:
             HARDWARE:
@@ -2523,7 +2727,7 @@ enums:
             OTHER:
                 description: Other component category
 
-    ComponentStatusEnum:
+    DiagnosticComponentStatusEnum:
         description: Presence and operational status of a discovered component
         permissible_values:
             PRESENT:
@@ -2539,7 +2743,7 @@ enums:
             UNKNOWN:
                 description: Component status is unknown
 
-    ComponentRelationshipEnum:
+    DiagnosticComponentRelationshipEnum:
         description: Parent-child relationship types in a component hierarchy
         permissible_values:
             CONTAINS:
@@ -2555,7 +2759,7 @@ enums:
             OTHER:
                 description: Other relationship type
 
-    TestTypeEnum:
+    DiagnosticTestTypeEnum:
         description: Types of diagnostic and component tests
         permissible_values:
             FUNCTIONAL:
@@ -2579,7 +2783,7 @@ enums:
             OTHER:
                 description: Other test type
 
-    TestResultEnum:
+    DiagnosticTestResultEnum:
         description: Component test result states
         permissible_values:
             PASS:
@@ -2597,7 +2801,7 @@ enums:
             UNKNOWN:
                 description: Test result is unknown
 
-    ComplianceStatusEnum:
+    DiagnosticComplianceStatusEnum:
         description: Compliance state against a reference, standard, or specification
         permissible_values:
             COMPLIANT:
@@ -2613,7 +2817,7 @@ enums:
             UNKNOWN:
                 description: Compliance status is unknown
 
-    CalibrationStatusEnum:
+    DiagnosticCalibrationStatusEnum:
         description: Calibration status for diagnostic equipment or sensors
         permissible_values:
             VALID:
@@ -2627,7 +2831,7 @@ enums:
             UNKNOWN:
                 description: Calibration status is unknown
 
-    MetricTypeEnum:
+    DiagnosticMetricTypeEnum:
         description: Types of condition and health metrics
         permissible_values:
             HEALTH:
@@ -2647,7 +2851,7 @@ enums:
             OTHER:
                 description: Other metric type
 
-    SanitizationMethodEnum:
+    DiagnosticSanitizationMethodEnum:
         description: Secure data sanitization methods
         permissible_values:
             OVERWRITE:
@@ -2665,7 +2869,7 @@ enums:
             OTHER:
                 description: Other sanitization method
 
-    SanitizationStandardEnum:
+    DiagnosticSanitizationStandardEnum:
         description: Standards or policy references used for data sanitization
         permissible_values:
             NIST_800_88:
@@ -2683,7 +2887,7 @@ enums:
             OTHER:
                 description: Other standard or policy
 
-    SanitizationResultEnum:
+    DiagnosticSanitizationResultEnum:
         description: Result of a sanitization operation
         permissible_values:
             SUCCESS:
@@ -2699,7 +2903,7 @@ enums:
             UNKNOWN:
                 description: Sanitization result is unknown
 
-    DataClassificationEnum:
+    DiagnosticDataClassificationEnum:
         description: Data classification levels for data-bearing components
         permissible_values:
             PUBLIC:
@@ -2715,7 +2919,7 @@ enums:
             UNKNOWN:
                 description: Data classification is unknown
 
-    GradingScaleEnum:
+    DiagnosticGradingScaleEnum:
         description: Quality assessment grading scales
         permissible_values:
             LETTER:
@@ -2729,7 +2933,7 @@ enums:
             CUSTOM:
                 description: Custom grading scale
 
-    QualityCertificationStatusEnum:
+    DiagnosticQualityCertificationStatusEnum:
         description: Certification or status assigned after quality assessment
         permissible_values:
             CERTIFIED:
@@ -2747,7 +2951,7 @@ enums:
             UNKNOWN:
                 description: Certification status unknown
 
-    ServiceActionTypeEnum:
+    DiagnosticServiceActionTypeEnum:
         description: Types of service actions
         permissible_values:
             REPAIR:
@@ -2769,7 +2973,7 @@ enums:
             OTHER:
                 description: Other service action type
 
-    ActionResultEnum:
+    DiagnosticActionResultEnum:
         description: Result states for service actions
         permissible_values:
             SUCCESS:
@@ -2785,7 +2989,7 @@ enums:
             UNKNOWN:
                 description: Action result unknown
 
-    PredictionTypeEnum:
+    DiagnosticPredictionTypeEnum:
         description: Types of predictive diagnostic analytics
         permissible_values:
             FAILURE_RISK:
@@ -2801,7 +3005,7 @@ enums:
             OTHER:
                 description: Other prediction type
 
-    MaintenanceUrgencyEnum:
+    DiagnosticMaintenanceUrgencyEnum:
         description: Urgency levels for recommended maintenance or intervention
         permissible_values:
             IMMEDIATE:
@@ -2819,7 +3023,7 @@ enums:
             UNKNOWN:
                 description: Urgency unknown
 
-    SeverityLevelEnum:
+    DiagnosticSeverityLevelEnum:
         description: Severity or impact levels for issues, deviations, and risk factors
         permissible_values:
             CRITICAL:

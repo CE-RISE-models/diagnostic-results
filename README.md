@@ -385,7 +385,7 @@ This identifier system enables seamless integration with databases and ensures c
 - **Usage and Maintenance Sync**: Results inform maintenance schedules and update usage patterns
 - **Compliance Updates**: Test results feed into compliance status and certification renewals
 - **LCA Impact**: Component replacements and failures inform environmental impact calculations
-- **Uncertainty and Quality**: Data quality, confidence levels, and uncertainty quantification handled by cross-cutting model
+- **Uncertainty, Metrological Traceability, and Data Quality**: Selected diagnostic records can optionally reference `uncertainty-quantification`, `metrological-traceability`, and `data-quality-framework` utility model records
 
 **External System Integration:**
 - **CMMS/EAM Systems**: Computerized Maintenance Management System integration

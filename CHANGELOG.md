@@ -2,6 +2,14 @@
 
 All notable changes to the CE-RISE Diagnostic Results Data Model will be documented in this file.
 
+## [0.1.0] - 2026-05-12
+
+### Added
+- Optional links from diagnostic test, measurement, reference, calibration, condition, sanitization, quality assessment, service, and predictive analytics records to the CE-RISE uncertainty quantification, metrological traceability, and data quality framework utility models.
+
+### Changed
+- Renamed local controlled vocabularies to diagnostic-specific names where needed to avoid symbol conflicts with imported utility models.
+
 ## [0.0.4] - 2026-05-12
 
 ### Added
