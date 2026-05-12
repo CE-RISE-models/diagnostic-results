@@ -2,6 +2,13 @@
 
 All notable changes to the CE-RISE Diagnostic Results Data Model will be documented in this file.
 
+## [0.0.4] - 2026-05-12
+
+### Added
+- Replaced placeholder diagnostic branches with concrete LinkML classes for component inventory, component test results, condition metrics, data sanitization, quality assessment, service actions, and predictive analytics.
+- Added supporting nested classes for measured values, reference values, test parameters, deviations, comparisons, calibration metadata, degradation indicators, data-bearing components, assessment criteria, quality issues, replaced parts, and risk factors.
+- Added controlled vocabularies for component, test, calibration, condition, sanitization, quality, service, prediction, urgency, and severity concepts.
+
 ## [0.0.3] - 2025-12-16
 
 ### Added
