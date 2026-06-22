@@ -919,6 +919,88 @@ classes:
                     owl.filler: dqf:dataQualityAssessment
                     sql_identifier: diag_test_data_quality_assessments
 
+            testing_certificate:
+                range: TestingCertificate
+                description: Certificate(s) of Testing (CoT) attesting the test outcome - required evidence for ICT processes
+                multivalued: true
+                inlined: true
+                inlined_as_list: true
+                required: false
+                annotations:
+                    references: "CIRPASS; Battery Pass"
+                    sql_identifier: diag_test_testing_certificate
+
+    TestingCertificate:
+        description: Certificate of Testing (CoT) - formal attestation of a test result linked to the diagnostic result
+        class_uri: schema:Certification
+        attributes:
+            certificate_identifier:
+                range: string
+                description: Unique identifier or report ID of the testing certificate
+                annotations:
+                    sql_identifier: diag_cot_id
+                    owl.filler: dcterms:identifier
+                    references: "CIRPASS"
+
+            certificate_identifier_value:
+                range: string
+                description: Value holder for certificate identifier
+
+            issuing_body:
+                range: string
+                description: Organisation or accredited body that issued the certificate
+                annotations:
+                    sql_identifier: diag_cot_issuing_body
+                    owl.filler: schema:issuedBy
+
+            issuing_body_value:
+                range: string
+                description: Value holder for issuing body
+
+            issue_date:
+                range: date
+                description: Date the certificate was issued
+                annotations:
+                    sql_identifier: diag_cot_issue_date
+                    owl.filler: dcterms:issued
+
+            issue_date_value:
+                range: string
+                description: Value holder for issue date
+
+            test_standard:
+                range: uri
+                description: URI reference to the test standard the certificate attests conformance to
+                annotations:
+                    sql_identifier: diag_cot_standard
+                    owl.filler: dcterms:conformsTo
+
+            test_standard_value:
+                range: string
+                description: Value holder for test standard
+
+            certificate_result:
+                range: DiagnosticTestResultEnum
+                description: Overall certified test result
+                annotations:
+                    sql_identifier: diag_cot_result
+                    owl.filler: sosa:hasResult
+
+            certificate_result_value:
+                range: string
+                description: Value holder for certificate result
+
+            document_reference:
+                range: uri
+                description: URI reference to the certificate document or supporting evidence
+                annotations:
+                    sql_identifier: diag_cot_document_ref
+                    owl.filler: dcterms:references
+
+            document_reference_value:
+                range: string
+                description: Value holder for document reference
+
     MeasuredValue:
         description: Measurement result from a diagnostic test or condition assessment
         class_uri: sosa:Result
