@@ -126,10 +126,17 @@ DiagnosticResults (root)
 │   │   └── SpecificationCompliance
 │   ├── RetestRequired
 │   ├── InconclusiveReason
-│   └── CalibrationTraceability
-│       ├── TestEquipmentID
-│       ├── LastCalibrationDate
-│       └── CalibrationCertificate
+│   ├── CalibrationTraceability
+│   │   ├── TestEquipmentID
+│   │   ├── LastCalibrationDate
+│   │   └── CalibrationCertificate
+│   └── TestingCertificate (Certificate of Testing / CoT)
+│       ├── CertificateIdentifier
+│       ├── IssuingBody
+│       ├── IssueDate
+│       ├── TestStandard
+│       ├── CertificateResult
+│       └── DocumentReference
 ├── 4. ConditionMetrics
 │   ├── MetricIdentifier
 │   ├── ComponentReference
@@ -179,16 +186,25 @@ DiagnosticResults (root)
 │   ├── ActionOutcome
 │   ├── TimeSpent
 │   └── TechnicianNotes
-└── 8. PredictiveAnalytics
-    ├── PredictionIdentifier
-    ├── PredictionModel
+├── 8. PredictiveAnalytics
+│   ├── PredictionIdentifier
+│   ├── PredictionModel
+│   ├── ComponentReference
+│   ├── FailureProbability
+│   ├── TimeToFailure
+│   ├── ConfidenceLevel
+│   ├── RecommendedActions
+│   ├── MaintenanceUrgency
+│   └── CostBenefitAnalysis
+└── 9. SoftwareVersionRecord (product's own firmware/OS/drivers)
+    ├── SoftwareType (BIOS/firmware/OS/driver/application)
     ├── ComponentReference
-    ├── FailureProbability
-    ├── TimeToFailure
-    ├── ConfidenceLevel
-    ├── RecommendedActions
-    ├── MaintenanceUrgency
-    └── CostBenefitAnalysis
+    ├── SoftwareName
+    ├── VersionBefore
+    ├── VersionAfter
+    ├── UpdateStatus
+    ├── UpdateSource
+    └── VerificationDate
 ```
 
 ### Workflow Sequence
@@ -365,6 +381,8 @@ This identifier system enables seamless integration with databases and ensures c
 ---
 
 ## Development Roadmap
+
+> **Note:** This roadmap documents the model's initial development. The data model has since been further developed and refined — see [CHANGELOG.md](CHANGELOG.md) for the authoritative, up-to-date record of changes.
 
 | Step | Component | Criticalities Identified | Solutions Implemented | Status | Missing/TODO |
 |------|-----------|-------------------------|----------------------|--------|--------------|

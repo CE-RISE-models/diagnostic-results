@@ -2,7 +2,7 @@
 
 All notable changes to the CE-RISE Diagnostic Results Data Model will be documented in this file.
 
-## [Unreleased]
+## [0.1.1] - 2026-06-23
 
 ### Added
 - `TestingCertificate` class (Certificate of Testing / CoT) linked from `ComponentTestResults` via the new `testing_certificate` attribute. Captures certificate ID, issuing body, issue date, test standard, certified result, and document reference - required evidence for ICT diagnostic processes.
