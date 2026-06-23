@@ -5,8 +5,8 @@ All notable changes to the CE-RISE Diagnostic Results Data Model will be documen
 ## [Unreleased]
 
 ### Added
-- `TestingCertificate` class (Certificate of Testing / CoT) linked from `ComponentTestResults` via the new `testing_certificate` attribute. Captures certificate ID, issuing body, issue date, test standard, certified result, and document reference - required evidence for ICT diagnostic processes (feedback item #1).
-- `SoftwareVersionRecord` class and `DiagnosticSoftwareTypeEnum`, linked from the root `DiagnosticResults` via the new `software_versions` attribute. Captures the diagnosed product's own BIOS, firmware, OS, and driver versions with before/after values, update status, source, and verification date (feedback item #7). DiagnosticSoftware remains scoped to the diagnostic tool, not the product.
+- `TestingCertificate` class (Certificate of Testing / CoT) linked from `ComponentTestResults` via the new `testing_certificate` attribute. Captures certificate ID, issuing body, issue date, test standard, certified result, and document reference - required evidence for ICT diagnostic processes.
+- `SoftwareVersionRecord` class and `DiagnosticSoftwareTypeEnum`, linked from the root `DiagnosticResults` via the new `software_versions` attribute. Captures the diagnosed product's own BIOS, firmware, OS, and driver versions with before/after values, update status, source, and verification date. DiagnosticSoftware remains scoped to the diagnostic tool, not the product.
 
 ## [0.1.0] - 2026-05-12
 
