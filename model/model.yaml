@@ -73,6 +73,12 @@ classes:
                 range: PredictiveAnalytics
                 description: Predictive maintenance outputs
                 multivalued: true
+            software_versions:
+                range: SoftwareVersionRecord
+                description: Firmware, BIOS, OS, and driver version records of the product being diagnosed
+                multivalued: true
+                annotations:
+                    references: "CIRPASS"
 
     DiagnosticEvent:
         description: Foundation for all diagnostic activities with complete context
@@ -1000,6 +1006,98 @@ classes:
             document_reference_value:
                 range: string
                 description: Value holder for document reference
+
+    SoftwareVersionRecord:
+        description: Firmware, BIOS, OS, or driver version record of the product being diagnosed, including before/after update state
+        class_uri: schema:SoftwareApplication
+        attributes:
+            software_type:
+                range: DiagnosticSoftwareTypeEnum
+                description: Type of software or firmware (BIOS, firmware, OS, driver, application)
+                annotations:
+                    sql_identifier: diag_swver_type
+                    owl.filler: dcterms:type
+
+            software_type_value:
+                range: string
+                description: Value holder for software type
+
+            component_reference:
+                range: string
+                description: Reference to the component or product the software/firmware belongs to
+                annotations:
+                    sql_identifier: diag_swver_component_ref
+                    owl.filler: dcterms:references
+
+            component_reference_value:
+                range: string
+                description: Value holder for component reference
+
+            software_name:
+                range: string
+                description: Name of the software, firmware, OS image, or driver
+                annotations:
+                    sql_identifier: diag_swver_name
+                    owl.filler: schema:name
+
+            software_name_value:
+                range: string
+                description: Value holder for software name
+
+            version_before:
+                range: string
+                description: Version present before any update (current/as-found version)
+                annotations:
+                    sql_identifier: diag_swver_version_before
+                    owl.filler: schema:softwareVersion
+
+            version_before_value:
+                range: string
+                description: Value holder for version before
+
+            version_after:
+                range: string
+                description: Version present after update, if an update was applied
+                annotations:
+                    sql_identifier: diag_swver_version_after
+                    owl.filler: schema:softwareVersion
+
+            version_after_value:
+                range: string
+                description: Value holder for version after
+
+            update_status:
+                range: string
+                description: Update status (e.g. up-to-date, updated, update available, not applicable)
+                annotations:
+                    sql_identifier: diag_swver_update_status
+                    owl.filler: schema:actionStatus
+
+            update_status_value:
+                range: string
+                description: Value holder for update status
+
+            update_source:
+                range: uri
+                description: URI reference to the source of the update (vendor update server, image repository, etc.)
+                annotations:
+                    sql_identifier: diag_swver_update_source
+                    owl.filler: dcterms:source
+
+            update_source_value:
+                range: string
+                description: Value holder for update source
+
+            verification_date:
+                range: date
+                description: Date the software/firmware version was verified
+                annotations:
+                    sql_identifier: diag_swver_verification_date
+                    owl.filler: dcterms:date
+
+            verification_date_value:
+                range: string
+                description: Value holder for verification date
 
     MeasuredValue:
         description: Measurement result from a diagnostic test or condition assessment
@@ -2840,6 +2938,22 @@ enums:
                 description: Component is powered by another component
             OTHER:
                 description: Other relationship type
+
+    DiagnosticSoftwareTypeEnum:
+        description: Types of product firmware or software whose version is recorded
+        permissible_values:
+            BIOS:
+                description: BIOS or UEFI firmware
+            FIRMWARE:
+                description: Device or component firmware
+            OS:
+                description: Operating system or OS image
+            DRIVER:
+                description: Device driver
+            APPLICATION:
+                description: Application or embedded software
+            OTHER:
+                description: Other software or firmware type
 
     DiagnosticTestTypeEnum:
         description: Types of diagnostic and component tests
